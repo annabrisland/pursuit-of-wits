@@ -5,14 +5,15 @@ import Question from "./question";
 const QuestionContainer = () => {
     const category = 9; 
 
-    // const [ questionData, setQuestionData ] = useState({
-    //     category: "9",
-    //     results: [],
-    // });
+    const [ questionData, setQuestionData ] = useState({
+        category: "9",
+        results: [],
+    });
 
     const searchQuestion = category => {
         API.search(category)
-        .then((res) => {console.log(res.data.results[0])})
+        .then((res) => setQuestionData({ ...questionData, results: res.data.results[0]}))
+        .catch((err) => console.log(err));
     };
 
     const handleSubmit = () => {
@@ -23,7 +24,8 @@ const QuestionContainer = () => {
         <div>
         <button
         onClick={handleSubmit}/>
-        <Question />
+        <Question 
+        title={questionData.results.question}/>
         </div>
     );
 }

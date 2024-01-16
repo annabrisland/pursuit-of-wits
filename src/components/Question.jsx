@@ -1,7 +1,11 @@
-const Question = () => {
+import React from "react";
+
+const Question = (props) => {
     
     return (
-        <div>Hello</div>
+        <div>
+            <h2 className="question-title">{props.title}</h2>
+        </div>
     )
 };
 
