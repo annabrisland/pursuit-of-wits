@@ -1,11 +1,12 @@
 import Gameboard from "./components/Gameboard";
-import Question from "./components/question";
+import QuestionContainer from "./components/QuestionContainer";
+
 import "./App.css";
 
 const App = () => {
   return (
     <div>
-      <Question />
+      <QuestionContainer />
     </div>
   )
 };
