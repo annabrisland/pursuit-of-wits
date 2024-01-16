@@ -6,6 +6,9 @@ const App = () => {
     const totalSquares = 100;
     const gameBoardContainer = document.getElementById("game-board-container");
 
+    // Clear previous squares
+    gameBoardContainer.innerHTML = "";
+
     for (let i = 0; i < totalSquares; i++) {
       let square = document.createElement("div");
       square.classList.add("board-square", "color-square");
