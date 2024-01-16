@@ -5,8 +5,8 @@ import Dicee from "./components/Dicee";
 const App = () => {
   return (
     <div>
-      <Gameboard />
       <Dicee />
+      <Gameboard />
     </div>
   );
 };

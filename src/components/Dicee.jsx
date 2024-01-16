@@ -7,6 +7,15 @@ const DiceGame = () => {
   const rollDice = () => {
     const randomNumber = Math.floor(Math.random() * 6) + 1;
     setDiceNumber(randomNumber);
+
+    const diceElement = document.querySelector(".dice");
+    diceElement.classList.remove("rotate-animation");
+
+    // Trigger reflow to restart the animation
+    void diceElement.offsetWidth;
+
+    // Add animation class back
+    diceElement.classList.add("rotate-animation");
   };
 
   return (
@@ -16,7 +25,7 @@ const DiceGame = () => {
       <div className="dice" onClick={rollDice}>
         <img
           className={`img rotate-animation`}
-          src={`/images/dice${diceNumber}.png`} // Adjust the path based on your project structure
+          src={`/images/dice${diceNumber}.png`}
           alt={`Dice ${diceNumber}`}
         />
       </div>
