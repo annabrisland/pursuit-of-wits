@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
+
+import MainBoard from "./components/MainBoard";
 import "./App.css";
 
 const App = () => {
+
   useEffect(() => {
     const totalSquares = 100;
     const gameBoardContainer = document.getElementById("game-board-container");
@@ -46,9 +49,10 @@ const App = () => {
         <option value="3">3 Players</option>
         <option value="4">4 Players</option>
       </select>
-      <div className="layout" id="game-board-container"></div>
+        <div className="layout" id="game-board-container"></div>
     </div>
   );
+  
 };
 
 export default App;
