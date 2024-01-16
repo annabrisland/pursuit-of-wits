@@ -5,6 +5,8 @@ import "./App.css";
 
 const App = () => {
 
+  const cornerArray = []
+
   useEffect(() => {
     const totalSquares = 100;
     const gameBoardContainer = document.getElementById("game-board-container");
@@ -32,10 +34,9 @@ const App = () => {
 
       // Get screen coordinates
       const rect = square.getBoundingClientRect();
-      console.log(
-        `Square ${i + 1} Screen Coordinates: (${rect.left}, ${rect.top})`
-      );
+       cornerArray.push([rect.left, rect.top])
     }
+    console.log(cornerArray);
   }, []);
 
   return (
