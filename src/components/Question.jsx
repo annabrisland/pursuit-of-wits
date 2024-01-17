@@ -14,16 +14,34 @@ const Question = (props) => {
   // Randomise order of answers array
   answers.sort(() => Math.random() - 0.5);
 
-  // Create buttons for each answer
-  const handleAnswer = (event) => {
-    checkAnswer(event.target.value, props.correctAnswer);
-  }
+  // Accept answer and score
+  const [scoreData, setScoreData] = useState({
+    score: 0,
+  });
+  console.log("score is", scoreData.score);
 
+  const handleAnswer = (event) => {
+    setScoreData({
+      ...scoreData,
+      score: checkAnswer(
+        scoreData.score,
+        event.target.value,
+        props.correctAnswer
+      ),
+    });
+  };
+
+  // Create buttons for each answer
   const answersButtons = [];
 
   answers.forEach((answer, index) => {
     answersButtons.push(
-      <button key={index} value={answer} className="answer" onClick={handleAnswer}>
+      <button
+        key={index}
+        value={answer}
+        className="answer"
+        onClick={handleAnswer}
+      >
         {answer}
       </button>
     );
