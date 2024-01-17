@@ -1,7 +1,6 @@
-
+import React, { useState } from 'react'
 
 import MainBoard from "./components/MainBoard";
-import "./App.css";
 
 import QuestionContainer from "./components/QuestionContainer";
 
@@ -12,17 +11,18 @@ import "./App.css";
 
 const App = () => {
 
+  const [diceNumber, setDiceNumber] = useState(1);
+  const [playerPosition, setPlayerPosition] = useState(0);
+
 
   return (
 
     <div style={{ position: "relative", height: "auto" }}>
-
-
  
       <QuestionContainer />
 
-      <Dicee />
-      <MainBoard />
+      <Dicee setDiceNumber={setDiceNumber} movePlayer={setPlayerPosition}/>
+      <MainBoard playerPosition={playerPosition}/>
 
     </div>
   );
