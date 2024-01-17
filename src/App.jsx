@@ -5,12 +5,12 @@ import Play from "./components/pages/Play";
 
 const App = () => {
   return (
-      <Router>
-        <Routes>
-          <Route path="/" element={<SetUp />} />
-          <Route path="/play" element={<Play />} />
-        </Routes>
-      </Router>
+    <Router>
+      <Routes>
+        <Route path="/" element={<SetUp />} />
+        <Route path="/play" element={<Play />} />
+      </Routes>
+    </Router>
   );
 };
 
