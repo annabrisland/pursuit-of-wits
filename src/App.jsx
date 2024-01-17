@@ -1,30 +1,16 @@
-import React, { useState } from 'react'
-
-import MainBoard from "./components/MainBoard";
-
-import QuestionContainer from "./components/QuestionContainer";
-
-import Dicee from "./components/Dicee";
-
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
-
+import SetUp from "./components/pages/SetUp";
+import Play from "./components/pages/Play";
 
 const App = () => {
-
-  const [diceNumber, setDiceNumber] = useState(1);
-  const [playerPosition, setPlayerPosition] = useState(0);
-
-
   return (
-
-    <div style={{ position: "relative", height: "auto" }}>
- 
-      <QuestionContainer />
-
-      <Dicee setDiceNumber={setDiceNumber} movePlayer={setPlayerPosition}/>
-      <MainBoard playerPosition={playerPosition}/>
-
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<SetUp />} />
+        <Route path="/play" element={<Play />} />
+      </Routes>
+    </Router>
   );
 };
 
