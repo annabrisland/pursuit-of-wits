@@ -6,7 +6,7 @@ const CharacterSelection = ({ onSelectCharacter }) => {
 
   useEffect(() => {
     // Fetch characters from Giphy API
-    const apiKey = "YOUR_GIPHY_API_KEY";
+    const apiKey = "CSihDGDXYSQhtQgkW5TfC6AN1op6riVf";
     const endpoint = `https://api.giphy.com/v1/gifs/search?q=character&api_key=${apiKey}&limit=5`;
 
     fetch(endpoint)
@@ -25,4 +25,42 @@ const CharacterSelection = ({ onSelectCharacter }) => {
     setSelectedCharacter(character);
     onSelectCharacter(character.url);
   };
+
+  return (
+    <div>
+      <h2>Select Your Character</h2>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-around",
+          alignItems: "center",
+        }}
+      >
+        {characters.map((character) => (
+          <div
+            key={character.id}
+            onClick={() => handleCharacterSelect(character)}
+          >
+            <img
+              src={character.url}
+              alt={`Character ${character.id}`}
+              style={{ width: "80px", height: "80px", cursor: "pointer" }}
+            />
+          </div>
+        ))}
+      </div>
+      {selectedCharacter && (
+        <div>
+          <h3>Selected Character:</h3>
+          <img
+            src={selectedCharacter.url}
+            alt="Selected Character"
+            style={{ width: "120px", height: "120px" }}
+          />
+        </div>
+      )}
+    </div>
+  );
 };
+
+export default CharacterSelection;
