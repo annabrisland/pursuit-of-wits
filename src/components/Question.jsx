@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import checkAnswer from "../utils/scoring";
 
 const Question = (props) => {
   const [answers, setAnswers] = useState([]);
@@ -14,11 +15,15 @@ const Question = (props) => {
   answers.sort(() => Math.random() - 0.5);
 
   // Create buttons for each answer
+  const handleAnswer = (event) => {
+    checkAnswer(event.target.value, props.correctAnswer);
+  }
+
   const answersButtons = [];
 
   answers.forEach((answer, index) => {
     answersButtons.push(
-      <button key={index} className="answer">
+      <button key={index} value={answer} className="answer" onClick={handleAnswer}>
         {answer}
       </button>
     );
