@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import Character from "./Character";
 
 const Gameboard = () => {
-  let cornerArray= [];
+  const [cornerArray, setCornerArray] = useState([0,0,0,0]);
 
   useEffect(() => {
     const totalSquares = 100;
@@ -9,6 +10,8 @@ const Gameboard = () => {
 
     // Clear previous squares
     gameBoardContainer.innerHTML = "";
+
+    let tempArray = []
 
     for (let i = 0; i < totalSquares; i++) {
       let square = document.createElement("div");
@@ -30,8 +33,11 @@ const Gameboard = () => {
 
       // Get screen coordinates
       const rect = square.getBoundingClientRect();
-      cornerArray.push([rect.left, rect.top])
+      tempArray.push(rect.left)
+      tempArray.push(rect.top)
    }
+
+   setCornerArray(tempArray)
   }, []);
 
   return (
@@ -49,6 +55,7 @@ const Gameboard = () => {
         <option value="4">4 Players</option>
       </select>
       <div className="layout" id="game-board-container"></div>
+      <Character startLeft={cornerArray[0]} startTop={cornerArray[1]} diffX={cornerArray[2] - cornerArray[0]} diffY={cornerArray[3] - cornerArray[1]}/>
     </div>
   );
 };

@@ -1,12 +1,17 @@
 import Gameboard from "./components/Gameboard";
+import MainBoard from "./components/MainBoard";
 import "./App.css";
 import Dicee from "./components/Dicee";
 
 const App = () => {
+
+
   return (
-    <div>
+    <div style={{ position: "relative", height: "auto" }}>
+
       <Dicee />
-      <Gameboard />
+      <MainBoard />
+
     </div>
   );
 };
