@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
 
-import MainBoard from "../components/MainBoard";
+import MainBoard from "../MainBoard";
 
-import QuestionContainer from "../components/QuestionContainer";
+import QuestionContainer from "../QuestionContainer";
 
-import Dicee from "../components/Dicee";
-
-import "../App.css";
+import Dicee from "../Dicee";
 
 const Play = () => {
 
