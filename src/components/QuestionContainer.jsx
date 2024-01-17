@@ -25,7 +25,9 @@ const QuestionContainer = () => {
         <button
         onClick={handleSubmit}/>
         <Question 
-        title={questionData.results.question}/>
+        title={questionData.results.question}
+        correctAnswer={questionData.results.correct_answer}
+        incorrectAnswer={questionData.results.incorrect_answers}/>
         </div>
     );
 }
