@@ -1,30 +1,16 @@
-
-
-import MainBoard from "./components/MainBoard";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
-
-import QuestionContainer from "./components/QuestionContainer";
-
-import Dicee from "./components/Dicee";
-
-import "./App.css";
-
+import SetUp from "./components/pages/SetUp";
+import Play from "./components/pages/Play";
 
 const App = () => {
-
-
   return (
-
-    <div style={{ position: "relative", height: "auto" }}>
-
-
- 
-      <QuestionContainer />
-
-      <Dicee />
-      <MainBoard />
-
-    </div>
+      <Router>
+        <Routes>
+          <Route path="/" element={<SetUp />} />
+          <Route path="/play" element={<Play />} />
+        </Routes>
+      </Router>
   );
 };
 
