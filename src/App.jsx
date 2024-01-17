@@ -1,10 +1,14 @@
 import Gameboard from "./components/Gameboard";
-import "./App.css";
+import QuestionContainer from "./components/QuestionContainer";
 import Dicee from "./components/Dicee";
+
+import "./App.css";
+
 
 const App = () => {
   return (
     <div>
+      <QuestionContainer />
       <Dicee />
       <Gameboard />
     </div>
