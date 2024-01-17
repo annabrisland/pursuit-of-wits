@@ -4,11 +4,21 @@ import { useAnimate } from "framer-motion"
 function Character(props){
 
     const [scope, animate] = useAnimate();
-    const [top, setTop] = useState(0);
+    const [position, setPosition] = useState({
+        top: 20,
+        left: 30
+    });
+
+    const [squareNum, setSquareNum] = useState(0);
     
+    console.log(props.diffX, props.diffY)
+    const endPos = position.left + props.diffX;
+
     return (<div 
-                style={{ position: "absolute", top: `${40 + top}px`, left: 152, width: 32, height: 96, backgroundColor: "blue", border: "3px solid black" }} 
-                ref={scope} onClick={() => {animate(top, (top + 172), { duration: 2, onUpdate: latest => (setTop(latest))})}}> </div>)
+                style={{ position: "absolute", top: position.top, left: position.left, width: 32, height: 80, backgroundColor: "blue", border: "3px solid black" }} 
+                ref={scope} 
+                onClick={() => 
+                    {animate(position.left, endPos, { duration: 2, onUpdate: latest => (setPosition({top: position.top, left: latest}))})}}> </div>)
 }
 
 export default Character;
