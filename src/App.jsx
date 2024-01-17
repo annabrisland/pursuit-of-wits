@@ -7,8 +7,9 @@ const App = () => {
   return (
     <div>
       <QuestionContainer />
+      <Gameboard />
     </div>
-  )
+  );
 };
 
 export default App;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 const Question = (props) => {
-    const [ answers, setAnswers ] = useState([]);
+  const [answers, setAnswers] = useState([]);
 
   useEffect(() => {
     // Create answer array
@@ -9,6 +9,9 @@ const Question = (props) => {
     tempAnswers.push(props.correctAnswer);
     setAnswers(tempAnswers);
   }, [props]);
+
+  // Randomise order of answers array
+  answers.sort(() => Math.random() - 0.5);
 
   // Create buttons for each answer
   const answersButtons = [];
