@@ -9,10 +9,10 @@ const Question = (props) => {
     const tempAnswers = props.incorrectAnswer ?? [];
     tempAnswers.push(props.correctAnswer);
     setAnswers(tempAnswers);
-  }, [props]);
 
-  // Randomise order of answers array
-  answers.sort(() => Math.random() - 0.5);
+    // Randomise order of answers array
+    answers.sort(() => Math.random() - 0.5);
+  }, [props]);
 
   // Accept answer and score
   const [scoreData, setScoreData] = useState({
