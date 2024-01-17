@@ -7,7 +7,7 @@ const QuestionContainer = () => {
 
     const [ questionData, setQuestionData ] = useState({
         category: "9",
-        results: [],
+        results: {},
     });
 
     const searchQuestion = category => {

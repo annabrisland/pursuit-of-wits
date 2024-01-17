@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const Question = (props) => {
-  // Create answer array
-  const answers = props.incorrectAnswer ?? [];
-  answers.push(props.correctAnswer);
+    const [ answers, setAnswers ] = useState([]);
+
+  useEffect(() => {
+    // Create answer array
+    const tempAnswers = props.incorrectAnswer ?? [];
+    tempAnswers.push(props.correctAnswer);
+    setAnswers(tempAnswers);
+  }, [props]);
 
   // Create buttons for each answer
   const answersButtons = [];
