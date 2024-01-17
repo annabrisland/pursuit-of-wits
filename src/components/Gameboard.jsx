@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 
 const Gameboard = () => {
+  let cornerArray= [];
+
   useEffect(() => {
     const totalSquares = 100;
     const gameBoardContainer = document.getElementById("game-board-container");
@@ -28,10 +30,8 @@ const Gameboard = () => {
 
       // Get screen coordinates
       const rect = square.getBoundingClientRect();
-      console.log(
-        `Square ${i + 1} Screen Coordinates: (${rect.left}, ${rect.top})`
-      );
-    }
+      cornerArray.push([rect.left, rect.top])
+   }
   }, []);
 
   return (
