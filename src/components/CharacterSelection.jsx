@@ -20,4 +20,9 @@ const CharacterSelection = ({ onSelectCharacter }) => {
       })
       .catch((error) => console.error("Error fetching characters:", error));
   }, []);
+
+  const handleCharacterSelect = (character) => {
+    setSelectedCharacter(character);
+    onSelectCharacter(character.url);
+  };
 };
