@@ -1,5 +1,5 @@
-const checkAnswer = (score, chosen, correct) => {
-    return chosen == correct ? score + 1 : score;
+const checkAnswer = (chosenAnswer, correctAnswer) => {
+    return chosenAnswer == correctAnswer ? 1 : 0;
 }
 
 export default checkAnswer;
