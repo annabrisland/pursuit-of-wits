@@ -3,7 +3,6 @@ import MainBoard from "../MainBoard";
 import QuestionContainer from "../QuestionContainer";
 
 const Play = () => {
-  const [diceNumber, setDiceNumber] = useState(1);
   const [playerPosition, setPlayerPosition] = useState(0);
 
   // Set up to show & hide components
@@ -12,7 +11,12 @@ const Play = () => {
 
   return (
     <div style={{ position: "relative", height: "auto" }}>
-      {showQuestion ? <QuestionContainer changeQuestionState={setShowQuestion} changeBoardState={setShowBoard}/> : null}
+      {showQuestion ? (
+        <QuestionContainer
+          changeQuestionState={setShowQuestion}
+          changeBoardState={setShowBoard}
+        />
+      ) : null}
       {showBoard ? <MainBoard playerPosition={playerPosition} /> : null}
     </div>
   );

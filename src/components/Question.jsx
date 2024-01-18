@@ -29,20 +29,20 @@ const Question = (props) => {
 
   answers.forEach((answer, index) => {
     answersButtons.push(
-      <button
+      answer ? <button
         key={index}
         value={answer}
         className="answer"
         onClick={handleAnswer}
       >
         {decodeURIComponent(answer)}
-      </button>
+      </button> : ""
     );
   });
 
   return (
     <div>
-      <h2 className="question-title">{decodeURIComponent(props.title)}</h2>
+      <h2 className="question-title">{(props.title !== undefined) ? decodeURIComponent(props.title) : ""}</h2>
       <section className="answers">{answersButtons}</section>
     </div>
   );
