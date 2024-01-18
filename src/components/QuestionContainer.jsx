@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import API from "../utils/API";
-import Question from "./question";
+import Question from "./Question";
 
 const QuestionContainer = ({changeQuestionState, changeDiceState}) => {
   const category = 9;
