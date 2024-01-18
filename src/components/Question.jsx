@@ -18,9 +18,9 @@ const Question = (props) => {
   const handleAnswer = (event) => {
     props.changeQuestionState(false);
     if (checkAnswer(event.target.value, props.correctAnswer) > 0) {
-      props.changeDiceState(true);
+      props.changeBoardState(true);
     } else {
-        console.log("Incorrect :(")
+      console.log("Incorrect :(");
     }
   };
 
@@ -35,14 +35,14 @@ const Question = (props) => {
         className="answer"
         onClick={handleAnswer}
       >
-        {answer}
+        {decodeURIComponent(answer)}
       </button>
     );
   });
 
   return (
     <div>
-      <h2 className="question-title">{props.title}</h2>
+      <h2 className="question-title">{decodeURIComponent(props.title)}</h2>
       <section className="answers">{answersButtons}</section>
     </div>
   );
