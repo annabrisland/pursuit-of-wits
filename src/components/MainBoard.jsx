@@ -93,7 +93,13 @@ const MainBoard = () => {
             return
         } else {
             console.log(walk(playerPosition.old, playerPosition.current));
-            const moveVector = walk(playerPosition.old, playerPosition.current);
+            let moveVector;
+            if (playerPosition.current >= 90){
+                moveVector = walk(playerPosition.old, 90);
+            } else {
+                moveVector = walk(playerPosition.old, playerPosition.current);
+            }
+            
             const startX = c1Positions[0];
             const endX = startX + moveVector[1];
             const startY = c1Positions[1];
@@ -124,6 +130,10 @@ const MainBoard = () => {
     function walk(startPos, endPos) {
         if (cornerArrays.length === 0) {
             return
+        } else if (startPos === 90){
+            return
+        } else if (endPos > 90 ){
+            return;
         } else {
             const totalDiff = [0, 0]
             for (let i = 0; i < endPos - startPos; i++) {
