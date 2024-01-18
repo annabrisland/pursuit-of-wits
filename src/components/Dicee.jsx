@@ -1,14 +1,23 @@
 import React, { useState } from "react";
 import "../DiceeStyle.css";
 
-const DiceGame = ({setDiceNumber: setParentDiceNumber, movePlayer}) => {
-  const [diceNumber, setDiceNumber] = useState(1);
+const DiceGame = ({setParentDiceState, setPlayerPosition, currentPosition}) => {
 
+  const [diceNumber, setDiceNumber] = useState(1);
+  const [rollNumber, setRollNumber] = useState(0);
   const rollDice = () => {
+    
     const randomNumber = Math.floor(Math.random() * 6) + 1;
     
+    setRollNumber(rollNumber + 1);
+
+    setParentDiceState({
+      rollNumber: rollNumber,
+      diceNumber: randomNumber
+    });
+
     setDiceNumber(randomNumber);
-    movePlayer(randomNumber);
+    setPlayerPosition({old: currentPosition, current:  currentPosition + randomNumber});
     
     const diceElement = document.querySelector(".dice");
     diceElement.classList.remove("rotate-animation");
