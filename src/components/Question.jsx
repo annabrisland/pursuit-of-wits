@@ -10,6 +10,9 @@ const Question = (props) => {
     tempAnswers.push(props.correctAnswer);
     setAnswers(tempAnswers);
 
+    // Console.log for debugging
+    console.log(decodeURIComponent(props.correctAnswer));
+
     // Randomise order of answers array
     answers.sort(() => Math.random() - 0.5);
   }, [props]);
