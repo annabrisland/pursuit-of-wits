@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import API from "../utils/API";
-import Question from "./question";
+import Question from "./Question";
 
-const QuestionContainer = () => {
+const QuestionContainer = ({changeQuestionState, changeDiceState}) => {
   const category = 9;
 
   const [questionData, setQuestionData] = useState({
@@ -29,6 +29,8 @@ const QuestionContainer = () => {
         title={questionData.results.question}
         correctAnswer={questionData.results.correct_answer}
         incorrectAnswer={questionData.results.incorrect_answers}
+        changeQuestionState={changeQuestionState}
+        changeDiceState={changeDiceState}
       />
     </div>
   );

@@ -15,20 +15,13 @@ const Question = (props) => {
   }, [props]);
 
   // Accept answer and score
-  const [scoreData, setScoreData] = useState({
-    score: 0,
-  });
-  console.log("score is", scoreData.score);
-
   const handleAnswer = (event) => {
-    setScoreData({
-      ...scoreData,
-      score: checkAnswer(
-        scoreData.score,
-        event.target.value,
-        props.correctAnswer
-      ),
-    });
+    props.changeQuestionState(false);
+    if (checkAnswer(event.target.value, props.correctAnswer) > 0) {
+      props.changeDiceState(true);
+    } else {
+        console.log("Incorrect :(")
+    }
   };
 
   // Create buttons for each answer
