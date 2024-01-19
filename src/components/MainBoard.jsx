@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Square from "./Square";
 import Character from "./Character";
 import Dicee from "./Dicee";
-import { useAnimate } from "framer-motion";
 
 const MainBoard = () => {
 
@@ -10,6 +9,8 @@ const MainBoard = () => {
         window.innerWidth,
         window.innerHeight,
     ]);
+
+    const numberOfPlayers = 4;
 
     const [totalHeight, setTotalHeight] = useState(0);
 
@@ -19,7 +20,12 @@ const MainBoard = () => {
 
     const [colorMap, setColorMap] = useState(["white"]);
 
-    const [c1Positions, setC1Positions] = useState([0, 0])
+    const [cPositions, setCPositions] = useState({
+        0:[0, 0],
+        1:[0, 0],
+        2:[0, 0],
+        3:[0, 0]
+    })
 
     const [diceState, setDiceState] = useState({
         rollNumber: 0,
@@ -27,11 +33,46 @@ const MainBoard = () => {
     });
 
     const [playerPosition, setPlayerPosition] = useState({
-        old: 1,
-        current: 1
-    });
+        '0':{
+            old: 1,
+            current: 1
+        },
+        '1':{
+            old: 1,
+            current: 1
+        },
+        '2':{
+            old: 1,
+            current: 1
+        },
+        '3':{
+            old: 1,
+            current: 1
+        },
+    }
+    );
 
-    const [scope, animate] = useAnimate();
+    const [playerTurn, setPlayerTurn] = useState(0);
+    const [turn, setTurn] = useState(0)
+
+    const [playerStates, setPlayerStates] = useState([
+        {visibility: "visible", player: 0},
+        {visibility: "visible", player: 1},
+        {visibility: "visible", player: 2},
+        {visibility: "visible", player: 3}
+    ])
+
+    function setActivePlayers(number){
+        let tempStates = []
+        for(let i=0; i<4; i++){
+            if(i <= number - 1){
+                tempStates.push({visibility: "visible", player: i})
+            } else {
+                tempStates.push({visibility: "hidden", player: i})
+            }
+        }
+        setPlayerStates(tempStates);
+    }
 
     useEffect(() => {
         const handleWindowResize = () => {
@@ -89,24 +130,30 @@ const MainBoard = () => {
     }, [])
 
     useEffect(() => {
-        if (!walk(playerPosition.old, playerPosition.current)) {
+        console.log(playerPosition);
+        console.log(cPositions);
+        const updateNum = playerTurn;
+        if (!walk(playerPosition[updateNum].old, playerPosition[updateNum].current)) {
             return
         } else {
-            console.log(walk(playerPosition.old, playerPosition.current));
             let moveVector;
-            if (playerPosition.current >= 90){
-                moveVector = walk(playerPosition.old, 90);
+            if (playerPosition[updateNum].current >= 90) {
+                moveVector = walk(playerPosition[updateNum].old, 90);
             } else {
-                moveVector = walk(playerPosition.old, playerPosition.current);
+                moveVector = walk(playerPosition[updateNum].old, playerPosition[updateNum].current);
             }
-            
-            const startX = c1Positions[0];
+
+            const startX = cPositions[updateNum][0];
             const endX = startX + moveVector[1];
-            const startY = c1Positions[1];
+            const startY = cPositions[updateNum][1];
             const endY = startY + moveVector[0];
 
-            setC1Positions([endX, endY])
+            setCPositions({...cPositions, [updateNum]:[endX, endY]})
         }
+        setTurn(turn + 1);
+        setPlayerTurn((turn+1)%(numberOfPlayers));
+
+        console.log(turn, playerTurn);
     }, [playerPosition])
 
     function step(startPos) {
@@ -130,12 +177,19 @@ const MainBoard = () => {
     function walk(startPos, endPos) {
         if (cornerArrays.length === 0) {
             return
-        } else if (startPos === 90){
+        } else if (startPos === 90) {
             return
-        } else if (endPos > 90 ){
-            return;
+        } else if (endPos > 90) {
+            let totalDiff = [0, 0]
+            for (let i = 0; i < 90 - startPos; i++) {
+                let delta = step(startPos + i);
+                for (let i = 0; i < 2; i++) {
+                    totalDiff[i] = totalDiff[i] + delta[i];
+                }
+            }
+            return totalDiff;
         } else {
-            const totalDiff = [0, 0]
+            let totalDiff = [0, 0]
             for (let i = 0; i < endPos - startPos; i++) {
                 let delta = step(startPos + i);
                 for (let i = 0; i < 2; i++) {
@@ -148,14 +202,14 @@ const MainBoard = () => {
     }
 
     return (
-        <section ref={scope}>
-            <Dicee setParentDiceState={setDiceState} setPlayerPosition={setPlayerPosition} currentPosition={playerPosition.current} />
+        <section>
+            <Dicee setParentDiceState={setDiceState} setPlayerPosition={setPlayerPosition} currentPosition={playerPosition} playerTurn={playerTurn} turn={turn}/>
             <div style={{ position: "relative", height: totalHeight, width: totalWidth, margin: "60px" }}>
                 {cornerArrays.map(item =>
                     (<Square key={item[0]} squareNumber={item[0]} top={item[1][0]} left={item[1][1]} color={colorMap[item[0]]} />))
                 }
-                <Character top={c1Positions[1]} left={c1Positions[0]} />
-
+                {playerStates.map(({visibility, player}) => (<Character top={cPositions[player][1]} left={cPositions[player][0]} visibility={visibility} key={player}/>))}
+              
             </div>
         </section>
     )
