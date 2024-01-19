@@ -4,7 +4,6 @@ import Character from "./Character";
 import Dicee from "./Dicee";
 
 const MainBoard = () => {
-
     const [windowSize, setWindowSize] = useState([
         window.innerWidth,
         window.innerHeight,
@@ -21,31 +20,31 @@ const MainBoard = () => {
     const [colorMap, setColorMap] = useState(["white"]);
 
     const [cPositions, setCPositions] = useState({
-        0:[0, 0],
-        1:[0, 0],
-        2:[0, 0],
-        3:[0, 0]
+        0: [0, 0],
+        1: [0, 0],
+        2: [0, 0],
+        3: [0, 0]
     })
 
     const [diceState, setDiceState] = useState({
         rollNumber: 0,
-        diceNumber: 1
+        diceNumber: 1,
     });
 
     const [playerPosition, setPlayerPosition] = useState({
-        '0':{
+        '0': {
             old: 1,
             current: 1
         },
-        '1':{
+        '1': {
             old: 1,
             current: 1
         },
-        '2':{
+        '2': {
             old: 1,
             current: 1
         },
-        '3':{
+        '3': {
             old: 1,
             current: 1
         },
@@ -56,41 +55,28 @@ const MainBoard = () => {
     const [turn, setTurn] = useState(0)
 
     const [playerStates, setPlayerStates] = useState([
-        {visibility: "visible", player: 0},
-        {visibility: "visible", player: 1},
-        {visibility: "visible", player: 2},
-        {visibility: "visible", player: 3}
+        { visibility: "visible", player: 0 },
+        { visibility: "visible", player: 1 },
+        { visibility: "visible", player: 2 },
+        { visibility: "visible", player: 3 }
     ])
-
-    function setActivePlayers(number){
-        let tempStates = []
-        for(let i=0; i<4; i++){
-            if(i <= number - 1){
-                tempStates.push({visibility: "visible", player: i})
-            } else {
-                tempStates.push({visibility: "hidden", player: i})
-            }
-        }
-        setPlayerStates(tempStates);
-    }
 
     useEffect(() => {
         const handleWindowResize = () => {
             setWindowSize([window.innerWidth, window.innerHeight]);
         };
 
-        window.addEventListener('resize', handleWindowResize);
-
+        window.addEventListener("resize", handleWindowResize);
 
         const squaresWide = Math.floor((window.innerWidth - 120) / 120);
         const totalSquares = 90;
         const neededHeight = Math.ceil(totalSquares / squaresWide) * 120;
-        const neededWidth = squaresWide * 120
+        const neededWidth = squaresWide * 120;
         setTotalHeight(neededHeight);
         setTotalWidth(neededWidth);
         // const gameBoardContainer = document.getElementById("game-board-container");
 
-        let tempMap = {}
+        let tempMap = {};
 
         for (let i = 0; i < totalSquares; i++) {
             let square = document.createElement("div");
@@ -107,27 +93,26 @@ const MainBoard = () => {
                 squareId = (rowNum + 1) * squaresWide - colNum;
             }
 
-            tempMap = { ...tempMap, [`${squareId}`]: [rowNum * 120, colNum * 120] }
+            tempMap = { ...tempMap, [`${squareId}`]: [rowNum * 120, colNum * 120] };
         }
 
         setCornerArrays(Object.entries(tempMap));
         return () => {
-            window.removeEventListener('resize', handleWindowResize);
+            window.removeEventListener("resize", handleWindowResize);
         };
-
     }, [windowSize]);
 
     useEffect(() => {
         let tempColorMap = ["white"];
 
-        const colors = ["green", "red", "lightblue", "grey", "yellow"];  //adapt as necessary
+        const colors = ["green", "red", "lightblue", "grey", "yellow"]; //adapt as necessary
 
         for (let i = 0; i < 100; i++) {
-            tempColorMap.push(colors[Math.floor(Math.random() * (5))])
-        };
+            tempColorMap.push(colors[Math.floor(Math.random() * 5)]);
+        }
 
         setColorMap(tempColorMap);
-    }, [])
+    }, []);
 
     useEffect(() => {
         console.log(playerPosition);
@@ -158,18 +143,18 @@ const MainBoard = () => {
 
     function step(startPos) {
         if (cornerArrays.length === 0) {
-            return
+            return;
         } else {
             const startSq = cornerArrays[startPos - 1][1];
             const nextSq = cornerArrays[startPos][1];
 
-            const distanceToNextSqX = nextSq[0] - startSq[0]
-            const distanceToNextSqY = nextSq[1] - startSq[1]
+            const distanceToNextSqX = nextSq[0] - startSq[0];
+            const distanceToNextSqY = nextSq[1] - startSq[1];
 
             if (distanceToNextSqX !== 0) {
                 return [distanceToNextSqX, 0];
             } else if (distanceToNextSqY !== 0) {
-                return [0, distanceToNextSqY]
+                return [0, distanceToNextSqY];
             }
         }
     }
