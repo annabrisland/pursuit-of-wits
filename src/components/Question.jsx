@@ -10,6 +10,9 @@ const Question = (props) => {
     tempAnswers.push(props.correctAnswer);
     setAnswers(tempAnswers);
 
+    // Console.log for debugging
+    console.log(decodeURIComponent(props.correctAnswer));
+
     // Randomise order of answers array
     answers.sort(() => Math.random() - 0.5);
   }, [props]);
@@ -18,9 +21,9 @@ const Question = (props) => {
   const handleAnswer = (event) => {
     props.changeQuestionState(false);
     if (checkAnswer(event.target.value, props.correctAnswer) > 0) {
-      props.changeDiceState(true);
+      props.changeBoardState(true);
     } else {
-        console.log("Incorrect :(")
+      console.log("Incorrect :(");
     }
   };
 
@@ -29,20 +32,20 @@ const Question = (props) => {
 
   answers.forEach((answer, index) => {
     answersButtons.push(
-      <button
+      answer ? <button
         key={index}
         value={answer}
         className="answer"
         onClick={handleAnswer}
       >
-        {answer}
-      </button>
+        {decodeURIComponent(answer)}
+      </button> : ""
     );
   });
 
   return (
     <div>
-      <h2 className="question-title">{props.title}</h2>
+      <h2 className="question-title">{(props.title !== undefined) ? decodeURIComponent(props.title) : ""}</h2>
       <section className="answers">{answersButtons}</section>
     </div>
   );

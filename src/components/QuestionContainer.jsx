@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import API from "../utils/API";
 import Question from "./Question";
 
-const QuestionContainer = ({changeQuestionState, changeDiceState}) => {
+const QuestionContainer = ({changeQuestionState, changeBoardState}) => {
   const category = 9;
 
   const [questionData, setQuestionData] = useState({
@@ -30,7 +30,7 @@ const QuestionContainer = ({changeQuestionState, changeDiceState}) => {
         correctAnswer={questionData.results.correct_answer}
         incorrectAnswer={questionData.results.incorrect_answers}
         changeQuestionState={changeQuestionState}
-        changeDiceState={changeDiceState}
+        changeBoardState={changeBoardState}
       />
     </div>
   );
