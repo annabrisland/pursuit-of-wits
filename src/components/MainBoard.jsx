@@ -9,6 +9,7 @@ const MainBoard = () => {
         window.innerHeight,
     ]);
 
+
     const numberOfPlayers = 4;
 
     const [totalHeight, setTotalHeight] = useState(0);
@@ -102,10 +103,12 @@ const MainBoard = () => {
         };
     }, [windowSize]);
 
+
     useEffect(() => {
         let tempColorMap = ["white"];
 
         const colors = ["green", "red", "lightblue", "grey", "yellow"]; //adapt as necessary
+
 
         for (let i = 0; i < 100; i++) {
             tempColorMap.push(colors[Math.floor(Math.random() * 5)]);
@@ -114,9 +117,9 @@ const MainBoard = () => {
         setColorMap(tempColorMap);
     }, []);
 
+
     useEffect(() => {
-        console.log(playerPosition);
-        console.log(cPositions);
+
         const updateNum = playerTurn;
         if (!walk(playerPosition[updateNum].old, playerPosition[updateNum].current)) {
             return
@@ -133,10 +136,10 @@ const MainBoard = () => {
             const startY = cPositions[updateNum][1];
             const endY = startY + moveVector[0];
 
-            setCPositions({...cPositions, [updateNum]:[endX, endY]})
+            setCPositions({ ...cPositions, [updateNum]: [endX, endY] })
         }
         setTurn(turn + 1);
-        setPlayerTurn((turn+1)%(numberOfPlayers));
+        setPlayerTurn((turn + 1) % (numberOfPlayers));
 
         console.log(turn, playerTurn);
     }, [playerPosition])
@@ -188,13 +191,13 @@ const MainBoard = () => {
 
     return (
         <section>
-            <Dicee setParentDiceState={setDiceState} setPlayerPosition={setPlayerPosition} currentPosition={playerPosition} playerTurn={playerTurn} turn={turn}/>
+            <Dicee setParentDiceState={setDiceState} setPlayerPosition={setPlayerPosition} currentPosition={playerPosition} playerTurn={playerTurn} turn={turn} />
             <div style={{ position: "relative", height: totalHeight, width: totalWidth, margin: "60px" }}>
                 {cornerArrays.map(item =>
                     (<Square key={item[0]} squareNumber={item[0]} top={item[1][0]} left={item[1][1]} color={colorMap[item[0]]} />))
                 }
-                {playerStates.map(({visibility, player}) => (<Character top={cPositions[player][1]} left={cPositions[player][0]} visibility={visibility} key={player}/>))}
-              
+                {playerStates.map(({ visibility, player }) => (<Character top={cPositions[player][1]} left={cPositions[player][0]} visibility={visibility} key={player} />))}
+
             </div>
         </section>
     )
