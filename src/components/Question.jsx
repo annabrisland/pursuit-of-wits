@@ -12,10 +12,10 @@ const Question = (props) => {
 
     // Console.log for debugging
     console.log(decodeURIComponent(props.correctAnswer));
-
-    // Randomise order of answers array
-    answers.sort(() => Math.random() - 0.5);
   }, [props]);
+
+  // Randomise order of answers array
+  answers.sort(() => Math.random() - 0.5);
 
   // Accept answer and score
   const handleAnswer = (event) => {
@@ -32,20 +32,26 @@ const Question = (props) => {
 
   answers.forEach((answer, index) => {
     answersButtons.push(
-      answer ? <button
-        key={index}
-        value={answer}
-        className="answer"
-        onClick={handleAnswer}
-      >
-        {decodeURIComponent(answer)}
-      </button> : ""
+      answer ? (
+        <button
+          key={index}
+          value={answer}
+          className="answer"
+          onClick={handleAnswer}
+        >
+          {decodeURIComponent(answer)}
+        </button>
+      ) : (
+        ""
+      )
     );
   });
 
   return (
     <div>
-      <h2 className="question-title">{(props.title !== undefined) ? decodeURIComponent(props.title) : ""}</h2>
+      <h2 className="question-title">
+        {props.title !== undefined ? decodeURIComponent(props.title) : ""}
+      </h2>
       <section className="answers">{answersButtons}</section>
     </div>
   );
