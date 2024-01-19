@@ -1,8 +1,15 @@
-# React + Vite
+# Pursuit of Wits 🏆
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
 
-Currently, two official plugins are available:
+Pursuit of Wits is a turn-based strategy game built with Vite and React where players can test their knowledge by answering trivia questions for a chance to roll the dice. The first player to reach the end of the board wins!
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![Screenshot](./src/assets/screenshot.png)
+
+## Usage
+
+The deployed site can be found at [here](https://pursuit-of-wits.netlify.app/).
+
+## License
+
+This repo is liscenced under the [MIT](https://choosealicense.com/licenses/mit/) license.
