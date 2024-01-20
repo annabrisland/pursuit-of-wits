@@ -19,12 +19,18 @@ const Question = (props) => {
 
   // Accept answer and score
   const handleAnswer = (event) => {
-    props.changeQuestionState(false);
+
+
     if (checkAnswer(event.target.value, props.correctAnswer) > 0) {
+      props.changeQuestionState(false);
       props.changeBoardState(true);
     } else {
+      props.setTurn(props.turn + 1);
+      props.setPlayerTurn((props.turn + 1) % props.numberOfPlayers)
+      props.setQNumber(props.qNumber+1);
       console.log("Incorrect :(");
     }
+
   };
 
   // Create buttons for each answer

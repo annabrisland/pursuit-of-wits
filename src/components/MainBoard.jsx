@@ -6,8 +6,9 @@ import QuestionContainer from "./QuestionContainer";
 
 const MainBoard = () => {
   // Set up to show & hide components
-  const [showBoard, setShowBoard] = useState(false);
+  const [showDice, setShowDice] = useState(false);
   const [showQuestion, setShowQuestion] = useState(true);
+  const [rollState, setRollState] = useState(false);
 
   const [windowSize, setWindowSize] = useState([
     window.innerWidth,
@@ -118,6 +119,7 @@ const MainBoard = () => {
     setColorMap(tempColorMap);
   }, []);
 
+
   useEffect(() => {
     const updateNum = playerTurn;
     if (
@@ -143,8 +145,7 @@ const MainBoard = () => {
       setCPositions({ ...cPositions, [updateNum]: [endX, endY] });
     }
     setTurn(turn + 1);
-    setPlayerTurn((turn + 1) % numberOfPlayers);
-
+    setPlayerTurn((turn+1)%numberOfPlayers)
     console.log(turn, playerTurn);
   }, [playerPosition]);
 
@@ -192,27 +193,31 @@ const MainBoard = () => {
     }
   }
 
-  if (!showBoard) {
     return (
-      <div>
+      <section>
         {showQuestion ? (
           <QuestionContainer
             changeQuestionState={setShowQuestion}
-            changeBoardState={setShowBoard}
+            changeBoardState={setShowDice}
+            setRollState={setRollState}
+            turn={turn}
+            playerTurn={playerTurn}
+            setTurn={setTurn}
+            setPlayerTurn={setPlayerTurn}
+            numberOfPlayers={numberOfPlayers}
           />
-        ) : null}
-      </div>
-    );
-  } else {
-    return (
-      <section>
-        <Dicee
-          setParentDiceState={setDiceState}
-          setPlayerPosition={setPlayerPosition}
-          currentPosition={playerPosition}
-          playerTurn={playerTurn}
-          turn={turn}
-        />
+        ) :  <Dicee
+        setParentDiceState={setDiceState}
+        setPlayerPosition={setPlayerPosition}
+        currentPosition={playerPosition}
+        playerTurn={playerTurn}
+        turn={turn}
+        changeQuestionState={setShowQuestion}
+        changeBoardState={setShowDice}
+        rollState={rollState}
+        setRollState={setRollState}
+      />}
+       
         <div
           style={{
             position: "relative",
@@ -241,7 +246,6 @@ const MainBoard = () => {
         </div>
       </section>
     );
-  }
-};
+  };
 
 export default MainBoard;
