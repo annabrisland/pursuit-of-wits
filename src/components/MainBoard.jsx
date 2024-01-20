@@ -4,7 +4,9 @@ import Character from "./Character";
 import Dicee from "./Dicee";
 import QuestionContainer from "./QuestionContainer";
 
-const MainBoard = ({ changeBoardState }) => {
+const MainBoard = () => {
+  // Set up to show & hide components
+  const [showBoard, setShowBoard] = useState(false);
   const [showQuestion, setShowQuestion] = useState(true);
 
   const [windowSize, setWindowSize] = useState([
@@ -190,49 +192,56 @@ const MainBoard = ({ changeBoardState }) => {
     }
   }
 
-  return (
-    <section>
-      {showQuestion ? (
-        <QuestionContainer
-          changeQuestionState={setShowQuestion}
-          changeBoardState={changeBoardState}
-        />
-      ) : null}
-      <Dicee
-        setParentDiceState={setDiceState}
-        setPlayerPosition={setPlayerPosition}
-        currentPosition={playerPosition}
-        playerTurn={playerTurn}
-        turn={turn}
-      />
-      <div
-        style={{
-          position: "relative",
-          height: totalHeight,
-          width: totalWidth,
-          margin: "60px",
-        }}
-      >
-        {cornerArrays.map((item) => (
-          <Square
-            key={item[0]}
-            squareNumber={item[0]}
-            top={item[1][0]}
-            left={item[1][1]}
-            color={colorMap[item[0]]}
+  if (!showBoard) {
+    return (
+      <div>
+        {showQuestion ? (
+          <QuestionContainer
+            changeQuestionState={setShowQuestion}
+            changeBoardState={setShowBoard}
           />
-        ))}
-        {playerStates.map(({ visibility, player }) => (
-          <Character
-            top={cPositions[player][1]}
-            left={cPositions[player][0]}
-            visibility={visibility}
-            key={player}
-          />
-        ))}
+        ) : null}
       </div>
-    </section>
-  );
+    );
+  } else {
+    return (
+      <section>
+        <Dicee
+          setParentDiceState={setDiceState}
+          setPlayerPosition={setPlayerPosition}
+          currentPosition={playerPosition}
+          playerTurn={playerTurn}
+          turn={turn}
+        />
+        <div
+          style={{
+            position: "relative",
+            height: totalHeight,
+            width: totalWidth,
+            margin: "60px",
+          }}
+        >
+          {cornerArrays.map((item) => (
+            <Square
+              key={item[0]}
+              squareNumber={item[0]}
+              top={item[1][0]}
+              left={item[1][1]}
+              color={colorMap[item[0]]}
+            />
+          ))}
+          {playerStates.map(({ visibility, player }) => (
+            <Character
+              top={cPositions[player][1]}
+              left={cPositions[player][0]}
+              visibility={visibility}
+              key={player}
+            />
+          ))}
+        </div>
+      </section>
+    );
+  }
 };
 
 export default MainBoard;
