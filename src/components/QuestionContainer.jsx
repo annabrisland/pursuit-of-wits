@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import API from "../utils/API";
 import Question from "./Question";
 
-const QuestionContainer = ({changeQuestionState, changeBoardState}) => {
+const QuestionContainer = ({changeQuestionState, changeBoardState, turn, setTurn, playerTurn, setPlayerTurn, numberOfPlayers}) => {
   const category = 9;
 
   const [questionData, setQuestionData] = useState({
     category: "9",
     results: {},
   });
+
+  const [qNumber, setQNumber] = useState(0);
+
+  useEffect(()=>{
+    searchQuestion(category);
+  }, [qNumber])
 
   const searchQuestion = (category) => {
     API.search(category)
@@ -18,19 +24,21 @@ const QuestionContainer = ({changeQuestionState, changeBoardState}) => {
       .catch((err) => console.log(err));
   };
 
-  const handleSubmit = () => {
-    searchQuestion(category);
-  };
-
   return (
     <div>
-      <button onClick={handleSubmit}>Get Question</button>
       <Question
         title={questionData.results.question}
         correctAnswer={questionData.results.correct_answer}
         incorrectAnswer={questionData.results.incorrect_answers}
         changeQuestionState={changeQuestionState}
         changeBoardState={changeBoardState}
+        numberOfPlayers={numberOfPlayers}
+        turn={turn}
+        playerTurn={playerTurn}
+        setTurn={setTurn}
+        setPlayerTurn={setPlayerTurn}
+        qNumber={qNumber}
+        setQNumber={setQNumber}
       />
     </div>
   );
