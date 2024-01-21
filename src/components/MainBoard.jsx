@@ -144,8 +144,7 @@ const MainBoard = () => {
 
       setCPositions({ ...cPositions, [updateNum]: [endX, endY] });
     }
-    setTurn(turn + 1);
-    setPlayerTurn((turn+1)%numberOfPlayers)
+
     console.log(turn, playerTurn);
   }, [playerPosition]);
 
@@ -210,7 +209,10 @@ const MainBoard = () => {
         setParentDiceState={setDiceState}
         setPlayerPosition={setPlayerPosition}
         currentPosition={playerPosition}
+        setPlayerTurn={setPlayerTurn}
         playerTurn={playerTurn}
+        setTurn={setTurn}
+        numberOfPlayers={numberOfPlayers}
         turn={turn}
         changeQuestionState={setShowQuestion}
         changeBoardState={setShowDice}

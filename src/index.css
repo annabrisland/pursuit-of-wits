@@ -63,6 +63,14 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+h1 {
+  margin: 30px;
+  font-family: "Lobster", cursive;
+  text-shadow: 5px 0 #232931;
+  font-size: 2rem;
+  color: #4ecca3;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
