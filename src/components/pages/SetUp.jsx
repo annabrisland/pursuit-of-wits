@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import Avatar from "../Avatar";
 
@@ -8,6 +8,13 @@ const SetUp = () => {
   const [avatarSeeds] = useState(
     [...Array(10)].map(() => Math.floor(Math.random() * 100000).toString())
   );
+
+  useEffect(() => {
+    // Load previously saved characters from local storage
+    const savedCharacters =
+      JSON.parse(localStorage.getItem("selectedCharacters")) || [];
+    setSelectedCharacters(savedCharacters);
+  }, []);
 
   const handlePlayerSelect = (num) => {
     setSelectedPlayers(num);
@@ -19,10 +26,20 @@ const SetUp = () => {
       selectedPlayers !== null &&
       selectedCharacters.length < selectedPlayers
     ) {
+      const newCharacter = {
+        player: (selectedCharacters.length % selectedPlayers) + 1,
+        index: index,
+      };
       setSelectedCharacters((prevCharacters) => [
         ...prevCharacters,
-        { player: (prevCharacters.length % selectedPlayers) + 1, index: index },
+        newCharacter,
       ]);
+
+      // Save selected characters to local storage
+      localStorage.setItem(
+        "selectedCharacters",
+        JSON.stringify([...selectedCharacters, newCharacter])
+      );
     }
   };
 
@@ -80,8 +97,7 @@ const SetUp = () => {
                       </span>
                     )
                 )}
-                <Avatar key={index} seed={seed} />{" "}
-                {/* Use the Avatar component with fixed seed */}
+                <Avatar key={index} seed={seed} />
               </div>
             ))}
           </div>
