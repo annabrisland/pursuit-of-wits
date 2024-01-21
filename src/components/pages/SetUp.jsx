@@ -57,7 +57,7 @@ const SetUp = () => {
   };
 
   return (
-    <div>
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
       <h2>Select Number of Players</h2>
       <div>
         {[1, 2, 3, 4].map((num) => (
@@ -70,7 +70,13 @@ const SetUp = () => {
       {selectedPlayers && (
         <>
           <h2>Select Characters</h2>
-          <div style={{ display: "flex", flexWrap: "wrap" }}>
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+            }}
+          >
             {avatarSeeds.map((seed, index) => (
               <div
                 key={index}
@@ -110,7 +116,20 @@ const SetUp = () => {
             ))}
           </div>
           {selectedCharacters.length === selectedPlayers && (
-            <NavLink to="/play" onClick={handleLetsPlay}>
+            <NavLink
+              to="/play"
+              onClick={handleLetsPlay}
+              style={{
+                display: "inline-block",
+                padding: "10px 20px",
+                backgroundColor: "#4caf50",
+                color: "white",
+                textDecoration: "none",
+                marginTop: "20px",
+                borderRadius: "5px",
+                fontSize: "18px",
+              }}
+            >
               Let's Play
             </NavLink>
           )}
