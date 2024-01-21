@@ -5,9 +5,17 @@ import Avatar from "../Avatar";
 const SetUp = () => {
   const [selectedPlayers, setSelectedPlayers] = useState(null);
   const [selectedCharacters, setSelectedCharacters] = useState([]);
-  const [avatarSeeds] = useState(
-    [...Array(10)].map(() => Math.floor(Math.random() * 100000).toString())
-  );
+  const avatarSeeds = JSON.parse(localStorage.getItem("avatarSeeds")) || [];
+
+  useEffect(() => {
+    if (avatarSeeds.length === 0) {
+      // Generate random avatar seeds only if not present in local storage
+      const newSeeds = [...Array(10)].map(() =>
+        Math.floor(Math.random() * 100000).toString()
+      );
+      localStorage.setItem("avatarSeeds", JSON.stringify(newSeeds));
+    }
+  }, [avatarSeeds]);
 
   useEffect(() => {
     // Load previously saved characters from local storage
