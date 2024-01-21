@@ -5,6 +5,9 @@ import Avatar from "../Avatar";
 const SetUp = () => {
   const [selectedPlayers, setSelectedPlayers] = useState(null);
   const [selectedCharacters, setSelectedCharacters] = useState([]);
+  const [avatarSeeds] = useState(
+    [...Array(10)].map(() => Math.floor(Math.random() * 100000).toString())
+  );
 
   const handlePlayerSelect = (num) => {
     setSelectedPlayers(num);
@@ -43,7 +46,7 @@ const SetUp = () => {
         <>
           <h2>Select Characters</h2>
           <div style={{ display: "flex", flexWrap: "wrap" }}>
-            {[...Array(10)].map((_, index) => (
+            {avatarSeeds.map((seed, index) => (
               <div
                 key={index}
                 onClick={() => handleCharacterSelect(index)}
@@ -77,7 +80,8 @@ const SetUp = () => {
                       </span>
                     )
                 )}
-                <Avatar key={index} /> {/* Use the Avatar component */}
+                <Avatar key={index} seed={seed} />{" "}
+                {/* Use the Avatar component with fixed seed */}
               </div>
             ))}
           </div>
