@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../DiceeStyle.css";
 
-const DiceGame = ({setParentDiceState, setPlayerPosition, currentPosition, turn, playerTurn, changeQuestionState, changeBoardState, rollState, setRollState}) => {
+const DiceGame = ({setParentDiceState, setPlayerPosition, currentPosition, turn, setTurn, setPlayerTurn, playerTurn, changeQuestionState, changeBoardState, rollState, setRollState, numberOfPlayers}) => {
 
   const [diceNumber, setDiceNumber] = useState(1);
   const [rollNumber, setRollNumber] = useState(0);
@@ -38,15 +38,17 @@ const DiceGame = ({setParentDiceState, setPlayerPosition, currentPosition, turn,
       setTimeout(() => {
         changeQuestionState(true);
         changeBoardState(false);
-        setRollState(false)
-      }, 2000);
+        setRollState(false);
+        setTurn(turn + 1);
+        setPlayerTurn((turn+1)%numberOfPlayers)
+      }, 3000);
     }
 
   };
 
   return (
     <div className="container">
-      <h1>{rollState ? `Player ${playerTurn + 1} rolled:` : `Roll the Dice!!` }</h1>
+      <h1>{rollState ? `Player ${(playerTurn +1)} rolled:` : `Player ${(playerTurn+1)} Roll the Dice!!` }</h1>
 
       <div className="dice" onClick={rollDice}>
         <img
