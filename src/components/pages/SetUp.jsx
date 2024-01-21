@@ -1,7 +1,6 @@
-// SetUp.jsx
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import Avatar from "../Avatar"; // Import the Avatar component
+import Avatar from "../Avatar";
 
 const SetUp = () => {
   const [selectedPlayers, setSelectedPlayers] = useState(null);
@@ -78,7 +77,7 @@ const SetUp = () => {
                       </span>
                     )
                 )}
-                <Avatar seed={index} /> {/* Render the Avatar component */}
+                <Avatar key={index} /> {/* Use the Avatar component */}
               </div>
             ))}
           </div>
