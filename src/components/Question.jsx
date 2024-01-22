@@ -99,7 +99,7 @@ const Question = (props) => {
           {props.title !== undefined ? decodeURIComponent(props.title) : ""}
         </h2>
       </div>
-      <section className="answers">{answersButtons}</section>
+      <section className="answers">{answerButtons}</section>
       </div>
       <div className="countdown">{props.title !== undefined ? <h2>{localStorage.getItem("page-countdown")}</h2> : ""}</div>
     </div>
