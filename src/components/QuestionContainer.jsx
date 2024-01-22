@@ -6,7 +6,6 @@ const QuestionContainer = ({ changeQuestionState, changeBoardState, turn, setTur
   const category = 9;
 
   const [questionData, setQuestionData] = useState({
-    category: "9",
     results: {},
   });
 
@@ -47,8 +46,10 @@ const QuestionContainer = ({ changeQuestionState, changeBoardState, turn, setTur
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-      <h1> {`Player ${(((localStorage.getItem("turn")))%numberOfPlayers)+1}'s Turn!!`} </h1>
+    
+    <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+      <h2 className="subtitle"> {`Player ${(((localStorage.getItem("turn")))%numberOfPlayers)+1}'s Turn!!`} </h2>
+
       <Question
         title={questionData.results.question}
         correctAnswer={questionData.results.correct_answer}
