@@ -52,7 +52,7 @@ const Question = (props) => {
 
   };
 
-
+// Create buttons for each answer
   const answersButtons = [];
   answers.forEach((answer, index) => {
     answersButtons.push(
@@ -71,18 +71,17 @@ const Question = (props) => {
     );
   });
 
-  // Create buttons for each answer
-
-
   return (
-    <div>
-      <div style={{ display: "flex", flexDirection: "row", alignItems:"between", justifyContent: "space-between", width: "90%" }}>
+    <div className="question">
+      <div>
+      <div>
         <h2 className="question-title" >
           {props.title !== undefined ? decodeURIComponent(props.title) : ""}
         </h2>
-        <h2>{pageCountDown}</h2>
       </div>
       <section className="answers">{answersButtons}</section>
+      </div>
+      <div className="countdown">{pageCountDown}</div>
     </div>
   );
 };

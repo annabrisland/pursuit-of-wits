@@ -79,7 +79,6 @@ const MainBoard = () => {
     const neededWidth = squaresWide * 120;
     setTotalHeight(neededHeight);
     setTotalWidth(neededWidth);
-    // const gameBoardContainer = document.getElementById("game-board-container");
 
     let tempMap = {};
 
@@ -110,7 +109,7 @@ const MainBoard = () => {
   useEffect(() => {
     let tempColorMap = ["white"];
 
-    const colors = ["green", "red", "lightblue", "grey", "yellow"]; //adapt as necessary
+    const colors = ["#F6744B", "#E04980", "#4BA0EA", "#96C268", "#FFC233"];
 
     for (let i = 0; i < 100; i++) {
       tempColorMap.push(colors[Math.floor(Math.random() * 5)]);

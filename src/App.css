@@ -61,28 +61,55 @@ a:hover {
   color: white;
 }
 
-/* For GameBoard */
-.board-square {
-  width: 100px;
-  height: 100px;
+/* For Questions */
+.question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 60px;
 }
 
-.color-square {
-  background-color: hsl(calc(var(--square-index) * 20), 70%, 50%);
-}
-
-.layout {
-  display: grid;
-  gap: 8px;
-}
-
-.start-square {
-  width: 100px;
-  height: 100px;
-  background-color: lightblue; /* Choose your desired color */
+.countdown {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
-  font-weight: bold;
+  background-color: #b1b1b1;
+  height: 30px;
+  width: 30px;
+  border-radius: 10px;
+  color: white;
+  padding: 10px;
+  margin-left: 50px;
+}
+
+.answers {
+  display: flex;
+  gap: 20px;
+}
+
+.answer {
+  margin: 0;
+  flex-grow: 1;
+  background-color: #1a1a1a;
+  border-radius: 10px;
+}
+
+.answer:hover {
+  background-color: #FFB300;
+}
+
+.answer:focus,
+.answer:focus-visible {
+  outline: 4px auto #1E88E5;
+  background-color: #FFB300;
+}
+
+/* For GameBoard */
+.square {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  font-weight: 500;
+  color: white;
 }

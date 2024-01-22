@@ -48,7 +48,7 @@ const DiceGame = ({setParentDiceState, setPlayerPosition, currentPosition, turn,
 
   return (
     <div className="container">
-      <h1>{rollState ? `Player ${(playerTurn +1)} rolled:` : `Player ${(playerTurn+1)} Roll the Dice!!` }</h1>
+      <h2>{rollState ? `Player ${(playerTurn +1)} rolled` : `Player ${(playerTurn+1)} click to roll` }</h2>
 
       <div className="dice" onClick={rollDice}>
         <img

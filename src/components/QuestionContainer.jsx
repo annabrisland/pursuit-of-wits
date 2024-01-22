@@ -6,7 +6,6 @@ const QuestionContainer = ({changeQuestionState, changeBoardState, turn, setTurn
   const category = 9;
 
   const [questionData, setQuestionData] = useState({
-    category: "9",
     results: {},
   });
 
@@ -26,7 +25,7 @@ const QuestionContainer = ({changeQuestionState, changeBoardState, turn, setTurn
 
   return (
     <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-      <h1> {`Player ${playerTurn + 1}'s Turn!!`} </h1>
+      <h2> {`Player ${playerTurn + 1}'s Question`} </h2>
       <Question
         title={questionData.results.question}
         correctAnswer={questionData.results.correct_answer}
