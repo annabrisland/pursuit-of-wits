@@ -1,21 +1,75 @@
 import React, { useEffect, useState } from "react";
 import Square from "./Square";
-import Character from "./Character";
+import AnimatedAvatar from "./AnimatedAvatar";
 import Dicee from "./Dicee";
 import QuestionContainer from "./QuestionContainer";
+import { createAvatar } from "@dicebear/avatars";
+import * as style from "@dicebear/avatars-male-sprites";
 
-const MainBoard = () => {
+
+const MainBoard = ({ numberOfPlayers }) => {
+
+    function step(startPos) {
+        if (cornerArrays.length === 0) {
+            return;
+        } else {
+            const startSq = cornerArrays[startPos][1];
+            const nextSq = cornerArrays[startPos + 1][1];
+
+            const distanceToNextSqX = nextSq[0] - startSq[0];
+            const distanceToNextSqY = nextSq[1] - startSq[1];
+
+            if (distanceToNextSqX !== 0) {
+                return [distanceToNextSqX, 0];
+            } else if (distanceToNextSqY !== 0) {
+                return [0, distanceToNextSqY];
+            }
+        }
+    }
+
+    function walk(startPos, endPos) {
+        if (cornerArrays.length === 0) {
+            return;
+        } else if (startPos === 90) {
+            return;
+        } else if (endPos > 90) {
+            let totalDiff = [0, 0];
+            for (let i = 0; i < 90 - startPos; i++) {
+                let delta = step(startPos + i);
+                for (let i = 0; i < 2; i++) {
+                    totalDiff[i] = totalDiff[i] + delta[i];
+                }
+            }
+            return totalDiff;
+        } else {
+            let totalDiff = [0, 0];
+            for (let i = 0; i < endPos - startPos; i++) {
+                let delta = step(startPos + i);
+                for (let i = 0; i < 2; i++) {
+                    totalDiff[i] = totalDiff[i] + delta[i];
+                }
+            }
+            return totalDiff;
+        }
+    }
     // Set up to show & hide components
     const [showDice, setShowDice] = useState(false);
     const [showQuestion, setShowQuestion] = useState(true);
     const [rollState, setRollState] = useState(false);
 
+    const [avatarsConfig, setAvatarsConfig] = useState([]);
+  
+    const [playerStates, setPlayerStates] = useState([
+      { visibility: "visible", player: 0 },
+      { visibility: "visible", player: 1 },
+      { visibility: "visible", player: 2 },
+      { visibility: "visible", player: 3 },
+  ]);
+
     const [windowSize, setWindowSize] = useState([
         window.innerWidth,
         window.innerHeight,
     ]);
-
-    const numberOfPlayers = 4;
 
     const [totalHeight, setTotalHeight] = useState(0);
 
@@ -36,13 +90,6 @@ const MainBoard = () => {
 
     const [playerTurn, setPlayerTurn] = useState(+localStorage.getItem("player-turn"));
     const [turn, setTurn] = useState(+localStorage.getItem("turn"));
-
-    const [playerStates, setPlayerStates] = useState([
-        { visibility: "visible", player: 0 },
-        { visibility: "visible", player: 1 },
-        { visibility: "visible", player: 2 },
-        { visibility: "visible", player: 3 },
-    ]);
 
     useEffect(() => {
         const handleWindowResize = () => {
@@ -127,30 +174,47 @@ const MainBoard = () => {
 
         if (!localStorage.getItem("turn")) {
             localStorage.setItem("turn", 0);
-            localStorage.setItem("player-turn", 0);
             setTurn(0);
             setPlayerTurn(0);
         } else {
             setTurn(+localStorage.getItem("turn"));
-            setPlayerTurn(+localStorage.getItem("player-turn"));
+            setPlayerTurn(+localStorage.getItem("turn")%numberOfPlayers);
         }
 
         if (!localStorage.getItem("player-position")){
-            setPlayerPosition({'0':{old: 0, current: 0}, '1':{old: 0, current: 0}, '2':{old: 0, current: 0}, '3':{old: 0, current: 0}})
+            setPlayerPosition({0:{old: 0, current: 0}, 1:{old: 0, current: 0}, 2:{old: 0, current: 0}, 3:{old: 0, current: 0}})
         } else {
             setPlayerPosition(JSON.parse(localStorage.getItem("player-position")))
         }
 
-        console.log("From useEffect[]", turn, playerTurn, localStorage.getItem("turn"), localStorage.getItem("player-turn") )
+        if (localStorage.getItem("avatarSeeds")) {
+            const avatarSeeds = JSON.parse(localStorage.getItem("avatarSeeds"));
+            const selectedCharacters = JSON.parse(localStorage.getItem("selectedCharacters"));
+            const tempArray = [];
+      
+            for (let i = 0; i < 4; i++) {
+              if (selectedCharacters[i]) {
+                tempArray.push({ state: playerStates[i], seed: avatarSeeds[selectedCharacters[i].index] });
+              } else {
+                tempArray.push({ state: { visibility: 'hidden', player: i }, seed: `empty` });
+              }
+            }
+      
+            localStorage.setItem("avatars-config", JSON.stringify(tempArray));
+            console.log(tempArray);
+            setAvatarsConfig(tempArray);
+          }
+
     }, []);
 
 
     useEffect(() => {
 
-        if(!playerPosition){
+        if((numberOfPlayers === 0)||(!playerPosition)){
             return
         } else {
-            const updateNum = turn%numberOfPlayers;
+            console.log(playerPosition);
+            const updateNum = (localStorage.getItem("turn"))%numberOfPlayers;
             if (
                 !walk(playerPosition[updateNum].old, playerPosition[updateNum].current)
             ) {
@@ -176,54 +240,9 @@ const MainBoard = () => {
             }
     
         }
-        
-        console.log(turn, playerTurn);
+
 
     }, [playerPosition]);
-
-    function step(startPos) {
-        if (cornerArrays.length === 0) {
-            return;
-        } else {
-            const startSq = cornerArrays[startPos][1];
-            const nextSq = cornerArrays[startPos + 1][1];
-
-            const distanceToNextSqX = nextSq[0] - startSq[0];
-            const distanceToNextSqY = nextSq[1] - startSq[1];
-
-            if (distanceToNextSqX !== 0) {
-                return [distanceToNextSqX, 0];
-            } else if (distanceToNextSqY !== 0) {
-                return [0, distanceToNextSqY];
-            }
-        }
-    }
-
-    function walk(startPos, endPos) {
-        if (cornerArrays.length === 0) {
-            return;
-        } else if (startPos === 90) {
-            return;
-        } else if (endPos > 90) {
-            let totalDiff = [0, 0];
-            for (let i = 0; i < 90 - startPos; i++) {
-                let delta = step(startPos + i);
-                for (let i = 0; i < 2; i++) {
-                    totalDiff[i] = totalDiff[i] + delta[i];
-                }
-            }
-            return totalDiff;
-        } else {
-            let totalDiff = [0, 0];
-            for (let i = 0; i < endPos - startPos; i++) {
-                let delta = step(startPos + i);
-                for (let i = 0; i < 2; i++) {
-                    totalDiff[i] = totalDiff[i] + delta[i];
-                }
-            }
-            return totalDiff;
-        }
-    }
 
     return (
         <section>
@@ -270,12 +289,13 @@ const MainBoard = () => {
                         color={colorMap[item[0]]}
                     />
                 ))}
-                {cPositions ? playerStates.map(({ visibility, player }) => (
-                    <Character
-                        left={cPositions[player][0]}
-                        top={cPositions[player][1]}
-                        visibility={visibility}
-                        key={player}
+                {(cPositions) ? avatarsConfig.map(({ state, seed }) => (
+                    <AnimatedAvatar
+                        left={cPositions[state.player][0]}
+                        top={cPositions[state.player][1]}
+                        visibility={state.visibility}
+                        key={state.player}
+                        seed={seed}
                     />
                 )) : null}
             </div>

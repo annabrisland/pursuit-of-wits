@@ -1,11 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MainBoard from "../MainBoard";
-import QuestionContainer from "../QuestionContainer";
+
 
 const Play = () => {
+
+  const [numberOfPlayers, setNumberOfPlayers] = useState(4);
+
+  useEffect(() => {
+    setNumberOfPlayers((JSON.parse(localStorage.getItem("selectedCharacters"))).length);
+  }, []);
+
+
   return (
     <div style={{ position: "relative", height: "auto" }}>
-      <MainBoard />
+      <MainBoard numberOfPlayers={numberOfPlayers} />
     </div>
   );
 };

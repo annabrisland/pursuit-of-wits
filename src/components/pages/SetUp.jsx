@@ -54,6 +54,12 @@ const SetUp = () => {
   const handleLetsPlay = () => {
     // Logic to proceed to the game board
     console.log("Let's Play!");
+    localStorage.removeItem("color-map");
+    localStorage.removeItem("c-positions");
+    localStorage.removeItem("turn");
+    localStorage.removeItem("player-turn");
+    localStorage.removeItem("player-position");
+    localStorage.setItem("page-countdown", 20);
   };
 
   return (

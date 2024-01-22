@@ -9,8 +9,8 @@ function Character({ top, left, visibility }) {
       style={{
         position: "absolute",
         top: 20,
-        left: 30,
-        width: 32,
+        left: 20,
+        width: 80,
         height: 80,
         backgroundColor: "blue",
         border: "3px solid black",
