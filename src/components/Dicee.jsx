@@ -27,6 +27,8 @@ const DiceGame = ({setParentDiceState, setPlayerPosition, currentPosition, turn,
   
       setPlayerPosition({...currentPosition, [updateNum]:{old:currentPosition[updateNum].current, current: currentPosition[updateNum].current + randomNumber}});
   
+      localStorage.setItem("player-position", JSON.stringify({...currentPosition, [updateNum]:{old:currentPosition[updateNum].current, current: currentPosition[updateNum].current + randomNumber}}))
+
       const diceElement = document.querySelector(".dice");
       diceElement.classList.remove("rotate-animation");
   
@@ -41,6 +43,8 @@ const DiceGame = ({setParentDiceState, setPlayerPosition, currentPosition, turn,
         setRollState(false);
         setTurn(turn + 1);
         setPlayerTurn((turn+1)%numberOfPlayers)
+        localStorage.setItem("turn", turn+1);
+        localStorage.setItem("player-turn", (turn+1)%numberOfPlayers);
       }, 3000);
     }
 
@@ -49,7 +53,6 @@ const DiceGame = ({setParentDiceState, setPlayerPosition, currentPosition, turn,
   return (
     <div className="container">
       <h2 className="subtitle">{rollState ? `Player ${(playerTurn +1)} rolled a ${diceNumber}.` : `Player ${(playerTurn+1)} click to roll` }</h2>
-
       <div className="dice" onClick={rollDice}>
         <img
           className={`img rotate-animation`}
