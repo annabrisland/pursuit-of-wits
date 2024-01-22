@@ -109,7 +109,7 @@ const MainBoard = () => {
   useEffect(() => {
     let tempColorMap = ["white"];
 
-    const colors = ["#F6744B", "#E04980", "#4BA0EA", "#96C268", "#FFC233"];
+    const colors = ["#F4511E", "#D81B60", "#1E88E5", "#7CB342", "#FFB300"];
 
     for (let i = 0; i < 100; i++) {
       tempColorMap.push(colors[Math.floor(Math.random() * 5)]);

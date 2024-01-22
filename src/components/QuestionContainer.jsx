@@ -25,7 +25,7 @@ const QuestionContainer = ({changeQuestionState, changeBoardState, turn, setTurn
 
   return (
     <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-      <h2> {`Player ${playerTurn + 1}'s Question`} </h2>
+      <h2 className="subtitle"> {`Player ${playerTurn + 1}'s Question`} </h2>
       <Question
         title={questionData.results.question}
         correctAnswer={questionData.results.correct_answer}
