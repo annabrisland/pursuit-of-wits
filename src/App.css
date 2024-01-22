@@ -1,45 +1,120 @@
-.board-square {
-  width: 100px;
-  height: 100px;
+/* For global components */
+h2 {
+  font-weight: 500;
 }
 
-.color-square {
-  background-color: hsl(calc(var(--square-index) * 20), 70%, 50%);
+h3 {
+  font-weight: 400;
 }
 
-.layout {
-  display: grid;
-  gap: 8px;
+button {
+  border-radius: 20px;
+  border: 4px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #F4511E;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.25s;
+  margin: 10px;
+}
+button:hover {
+  background-color: #1a1a1a;
 }
 
-.start-square {
-  width: 100px;
-  height: 100px;
-  background-color: lightblue; /* Choose your desired color */
+button:focus,
+button:focus-visible {
+  outline: 4px auto #F4511E;
+  background-color: #1a1a1a;
+}
+
+a {
+  display: inline-block;
+  font-weight: 500;
+  font-size: 24px;
+  padding: 20px 40px;
+  margin-top: 40px;
+  border-radius: 40px;
+  color: black;
+  text-decoration: none;
+  transition: background-color 0.25s;
+}
+
+a:hover {
+  background-color: #1E88E5;
+  color: white;
+}
+
+/* For SetUp */
+.setup {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.game-title {
+  margin: 20px 30%;
+  padding: 20px;
+  background-color: black;
+  border-radius: 40px;
+  color: white;
+}
+
+/* For Questions */
+.subtitle {
+  font-weight: 600;
+  font-size: 30px;
+}
+
+.question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 60px;
+}
+
+.countdown {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
-  font-weight: bold;
+  background-color: rgb(214, 214, 214);
+  height: 30px;
+  width: 30px;
+  border-radius: 10px;
+  color: white;
+  padding: 10px;
+  margin-left: 50px;
 }
-/* 
-@media (max-width: 499px) {
-  .layout {
-    grid-template-columns: repeat(1, 1fr);
-  }
+
+.answers {
+  display: flex;
+  gap: 20px;
 }
-@media (max-width: 799px) and (min-width: 500px) {
-  .layout {
-    grid-template-columns: repeat(2, 1fr);
-  }
+
+.answer {
+  margin: 0;
+  flex-grow: 1;
+  background-color: #1a1a1a;
+  border-radius: 10px;
 }
-@media (max-width: 1144px) and (min-width: 800px) {
-  .layout {
-    grid-template-columns: repeat(5, 1fr);
-  }
+
+.answer:hover {
+  background-color: #FFB300;
 }
-@media (min-width: 1144px) {
-  .layout {
-    grid-template-columns: repeat(10, 1fr);
-  }
-} */
+
+.answer:focus,
+.answer:focus-visible {
+  outline: 4px auto black;
+  background-color: #FFB300;
+}
+
+/* For GameBoard */
+.square {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  font-weight: 500;
+  color: white;
+}

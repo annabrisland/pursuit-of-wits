@@ -105,7 +105,7 @@ const MainBoard = () => {
         if (!localStorage.getItem("color-map")) {
             let tempColorMap = ["white"];
 
-            const colors = ["green", "red", "lightblue", "grey", "yellow"]; //adapt as necessary
+            const colors = ["#F4511E", "#D81B60", "#1E88E5", "#7CB342", "#FFB300"];
 
             for (let i = 0; i < 90; i++) {
                 tempColorMap.push(colors[Math.floor(Math.random() * 5)]);

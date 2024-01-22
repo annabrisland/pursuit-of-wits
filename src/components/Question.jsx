@@ -32,7 +32,6 @@ const Question = (props) => {
       if (pageCountDown > 0) {
         const myCountdown = +localStorage.getItem("page-countdown");
         localStorage.setItem("page-countdown", (myCountdown - 1));
-        console.log(pageCountDown);
         setPageCountDown(myCountdown - 1);
       } else {
         const myCountdown = +localStorage.getItem("page-countdown");
@@ -68,8 +67,8 @@ const Question = (props) => {
 
   };
 
-
   useEffect(() => {
+    // Create buttons for each answer
     const answersButtons = [];
     if (answers.length !== 0) {
       answers.forEach((answer, index) => {
@@ -90,23 +89,19 @@ const Question = (props) => {
     }
     setAnswerButtons(answersButtons);
 
-  }, [answers])
-
-  useEffect(() => {
-
-  }, [])
-  // Create buttons for each answer
-
+  }, [answers]);
 
   return (
-    <div>
-      <div style={{ display: "flex", flexDirection: "row", alignItems: "between", justifyContent: "space-between", width: "90%" }}>
+    <div className="question">
+      <div>
+      <div>
         <h2 className="question-title" >
           {props.title !== undefined ? decodeURIComponent(props.title) : ""}
         </h2>
-          {props.title !== undefined ? <h2>{localStorage.getItem("page-countdown")}</h2> : ""}
       </div>
       <section className="answers">{answerButtons}</section>
+      </div>
+      <div className="countdown">{props.title !== undefined ? <h2>{localStorage.getItem("page-countdown")}</h2> : ""}</div>
     </div>
   );
 };
