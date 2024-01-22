@@ -2,6 +2,14 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  color: #242424;
+  background-color: rgba(255, 255, 255, 0.87);
+}
+
+/* :root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
@@ -63,13 +71,7 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-h1 {
-  margin: 30px;
-  font-family: "Lobster", cursive;
-  text-shadow: 5px 0 #232931;
-  font-size: 2rem;
-  color: #4ecca3;
-}
+
 
 @media (prefers-color-scheme: light) {
   :root {
@@ -82,4 +84,4 @@ h1 {
   button {
     background-color: #f9f9f9;
   }
-}
+} */

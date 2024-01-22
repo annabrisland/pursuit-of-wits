@@ -57,8 +57,11 @@ const SetUp = () => {
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h2>Select Number of Players</h2>
+    <div className="setup">
+      <h2>Welcome to</h2>
+      <h1 className="game-title">Pursuit of Wits!</h1>
+      <h2>Let's set up your game...</h2>
+      <h3>Select number of Players</h3>
       <div>
         {[1, 2, 3, 4].map((num) => (
           <button key={num} onClick={() => handlePlayerSelect(num)}>
@@ -69,7 +72,7 @@ const SetUp = () => {
 
       {selectedPlayers && (
         <>
-          <h2>Select Characters</h2>
+          <h3>Select Characters</h3>
           <div
             style={{
               display: "flex",
@@ -119,16 +122,6 @@ const SetUp = () => {
             <NavLink
               to="/play"
               onClick={handleLetsPlay}
-              style={{
-                display: "inline-block",
-                padding: "10px 20px",
-                backgroundColor: "#4caf50",
-                color: "white",
-                textDecoration: "none",
-                marginTop: "20px",
-                borderRadius: "5px",
-                fontSize: "18px",
-              }}
             >
               Let's Play
             </NavLink>

@@ -1,3 +1,67 @@
+/* For global components */
+h2 {
+  font-weight: 500;
+}
+
+h3 {
+  font-weight: 400;
+}
+
+button {
+  border-radius: 20px;
+  border: 2px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #F4511E;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.25s;
+  margin: 10px;
+}
+button:hover {
+  background-color: #1a1a1a;
+}
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+  background-color: #1a1a1a;
+}
+
+a {
+  display: inline-block;
+  font-weight: 500;
+  font-size: 24px;
+  padding: 20px 40px;
+  margin-top: 40px;
+  border-radius: 40px;
+  color: black;
+  text-decoration: none;
+  transition: background-color 0.25s;
+}
+
+a:hover {
+  background-color: #1E88E5;
+  color: white;
+}
+
+/* For SetUp */
+.setup {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.game-title {
+  margin: 20px 30%;
+  padding: 20px;
+  background-color: black;
+  border-radius: 40px;
+  color: white;
+}
+
+/* For GameBoard */
 .board-square {
   width: 100px;
   height: 100px;
@@ -22,24 +86,3 @@
   font-size: 18px;
   font-weight: bold;
 }
-/* 
-@media (max-width: 499px) {
-  .layout {
-    grid-template-columns: repeat(1, 1fr);
-  }
-}
-@media (max-width: 799px) and (min-width: 500px) {
-  .layout {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (max-width: 1144px) and (min-width: 800px) {
-  .layout {
-    grid-template-columns: repeat(5, 1fr);
-  }
-}
-@media (min-width: 1144px) {
-  .layout {
-    grid-template-columns: repeat(10, 1fr);
-  }
-} */
