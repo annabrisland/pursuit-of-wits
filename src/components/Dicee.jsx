@@ -54,8 +54,8 @@ const DiceGame = ({setParentDiceState, setPlayerPosition, currentPosition, turn,
     <div className="container">
 
       <h2 className="subtitle">{rollState 
-        ? `Player ${1+(localStorage.getItem("turn"))%numberOfPlayers} rolled:` 
-        : `Player ${1+(localStorage.getItem("turn"))%numberOfPlayers} Roll the Dice!!` }</h2>
+        ? `Player ${1+(localStorage.getItem("turn"))%numberOfPlayers} rolled a ${diceNumber}.` 
+        : `Player ${1+(localStorage.getItem("turn"))%numberOfPlayers} roll the dice` }</h2>
       <div className="dice" onClick={rollDice}>
         <img
           className={`img rotate-animation`}

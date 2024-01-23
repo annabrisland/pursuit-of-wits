@@ -3,8 +3,6 @@ import Square from "./Square";
 import AnimatedAvatar from "./AnimatedAvatar";
 import Dicee from "./Dicee";
 import QuestionContainer from "./QuestionContainer";
-import { createAvatar } from "@dicebear/avatars";
-import * as style from "@dicebear/avatars-male-sprites";
 
 
 const MainBoard = ({ numberOfPlayers }) => {

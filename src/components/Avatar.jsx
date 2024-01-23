@@ -1,9 +1,9 @@
 import React from "react";
-import { createAvatar } from "@dicebear/avatars";
-import * as style from "@dicebear/avatars-male-sprites";
+import { createAvatar } from '@dicebear/core';
+import { botttsNeutral } from '@dicebear/collection';
 
 const Avatar = ({ seed }) => {
-  const svg = createAvatar(style, { seed, scale:90, backgroundColor: "b6e3f4" });
+  const svg = createAvatar(botttsNeutral, { seed, scale:90, radius:50 });
 
   return <div dangerouslySetInnerHTML={{ __html: svg }} />;
 };

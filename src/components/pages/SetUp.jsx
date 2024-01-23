@@ -11,7 +11,7 @@ const SetUp = () => {
     if (avatarSeeds.length === 0) {
       // Generate random avatar seeds only if not present in local storage
       const newSeeds = [...Array(10)].map(() =>
-        Math.floor(Math.random() * 100000).toString()
+        Math.floor(Math.random() * 10000).toString()
       );
       localStorage.setItem("avatarSeeds", JSON.stringify(newSeeds));
     }
@@ -93,7 +93,6 @@ const SetUp = () => {
                 style={{
                   width: "100px",
                   height: "100px",
-                  border: "4px solid black",
                   backgroundColor: "white",
                   margin: "10px",
                   fontSize: "20px",

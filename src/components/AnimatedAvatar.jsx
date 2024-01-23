@@ -1,12 +1,10 @@
-import React, {useState, useEffect} from "react";
-import { createAvatar } from "@dicebear/avatars";
-import * as style from "@dicebear/avatars-male-sprites";
-
+import { createAvatar } from '@dicebear/core';
+import { botttsNeutral } from '@dicebear/collection';
 import { motion } from "framer-motion";
 
-const AnimatedAvatar = ({ seed , top, left, visibility}) => {
+const AnimatedAvatar = ({ seed, top, left, visibility}) => {
 
-  const svg = createAvatar( style, { seed, scale:80, size:80, radius: 0, backgroundColor: ["b6e3f4"], backgroundType: ["gradientLinear"] });
+  const svg = createAvatar( botttsNeutral, { seed, scale:80, size:80, radius: 50 });
 
   return (<motion.div 
   animate={{ x: left, y: top }}
@@ -14,11 +12,12 @@ const AnimatedAvatar = ({ seed , top, left, visibility}) => {
   dangerouslySetInnerHTML={{ __html: svg }}
   style={{
     position: "absolute",
-    top: 20,
-    left: 20,
+    top: 22,
+    left: 22,
     width: 80,
     height: 80,
-    border: "3px solid black",
+    border: "1px solid black",
+    borderRadius: "90px",
     visibility: visibility,
   }}
    />);
