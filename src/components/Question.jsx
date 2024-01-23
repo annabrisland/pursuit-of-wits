@@ -24,7 +24,7 @@ const Question = (props) => {
     // Console.log for debugging
     console.log(decodeURIComponent(props.correctAnswer));
 
-  }, [props]);
+  }, [props.correctAnswer]);
 
   useEffect(() => {
 
