@@ -13,13 +13,9 @@ const Question = (props) => {
     // Create answer array
     const tempAnswers = props.incorrectAnswer ?? [];
     tempAnswers.push(props.correctAnswer);
-    tempAnswers.sort(() => Math.random() - 0.5);
-    tempAnswers.sort(() => Math.random() - 0.5);
+    // Randomise order of answers array
     tempAnswers.sort(() => Math.random() - 0.5);
     setAnswers(tempAnswers);
-
-    // Randomise order of answers array
-    answers.sort(() => Math.random() - 0.5);
 
     // Console.log for debugging
     console.log(decodeURIComponent(props.correctAnswer));
@@ -29,6 +25,8 @@ const Question = (props) => {
   useEffect(() => {
 
     setTimeout(() => {
+      // Set seconds timer for each question
+      const time = 15;
       if (pageCountDown > 0) {
         const myCountdown = +localStorage.getItem("page-countdown");
         localStorage.setItem("page-countdown", (myCountdown - 1));
@@ -41,16 +39,16 @@ const Question = (props) => {
           localStorage.removeItem("question-data");
           props.setTurn(props.turn + 1);
           localStorage.setItem("turn", +(props.turn + 1));
-          localStorage.setItem("page-countdown", 20);
-          setPageCountDown(20);
+          localStorage.setItem("page-countdown", time);
+          setPageCountDown(time);
           props.setQNumber(props.qNumber + 1);
           console.log("Incorrect Answer :(");
         }
         else if (checkAnswer(givenAnswer, props.correctAnswer) > 0) {
           props.changeQuestionState(false);
           props.changeBoardState(true);
-          setPageCountDown(20);
-          localStorage.setItem("page-countdown", 20);
+          setPageCountDown(time);
+          localStorage.setItem("page-countdown", time);
           localStorage.removeItem("question-data");
         }
       }
