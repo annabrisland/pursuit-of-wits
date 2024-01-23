@@ -8,7 +8,7 @@ const Results = () => {
             <h1>and the winner is...</h1>
             <Podium />
             <NavLink
-              to="/play"
+              to="/"
             >
               Rematch
             </NavLink>
