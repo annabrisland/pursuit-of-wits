@@ -4,7 +4,7 @@
 
 Pursuit of Wits is a turn-based strategy game built with Vite and React where players can test their knowledge by answering trivia questions for a chance to roll the dice. The first player to reach the end of the board wins!
 
-![Screenshot](./src/assets/screenshot.png)
+![Screenshot](./public/images/screenshot.png)
 
 ## Usage
 
