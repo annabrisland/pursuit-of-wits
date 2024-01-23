@@ -102,7 +102,6 @@ const MainBoard = ({ numberOfPlayers }) => {
         const neededWidth = squaresWide * 120;
         setTotalHeight(neededHeight);
         setTotalWidth(neededWidth);
-        // const gameBoardContainer = document.getElementById("game-board-container");
 
         let tempMap = {};
 
