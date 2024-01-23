@@ -12,8 +12,8 @@ const AnimatedAvatar = ({ seed, top, left, visibility}) => {
   dangerouslySetInnerHTML={{ __html: svg }}
   style={{
     position: "absolute",
-    top: 20,
-    left: 20,
+    top: 22,
+    left: 22,
     width: 80,
     height: 80,
     border: "1px solid black",

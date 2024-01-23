@@ -5,7 +5,7 @@ const Square = (props) => {
         position: "absolute",
         width: 100,
         height: 100,
-        border: `4px solid #1a1a1a`,
+        border: `3px solid #1a1a1a`,
         backgroundColor: `${props.color}`,
         borderRadius: `16px`,
         margin: `10px`,
