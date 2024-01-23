@@ -12,6 +12,8 @@
   "dependencies": {
     "@dicebear/avatars": "^4.10.8",
     "@dicebear/avatars-male-sprites": "^4.10.8",
+    "@dicebear/collection": "^7.0.4",
+    "@dicebear/core": "^7.0.4",
     "axios": "^1.6.5",
     "framer-motion": "^10.18.0",
     "react": "^18.2.0",
