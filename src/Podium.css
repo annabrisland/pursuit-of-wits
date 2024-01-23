@@ -1,0 +1,29 @@
+.podium {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 50px;
+}
+
+.podium-level {
+  width: 200px;
+  height: 50px;
+  background-color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+#third-place {
+  background-color: #cd7f32; /* Bronze */
+}
+
+#second-place {
+  background-color: #c0c0c0; /* Silver */
+}
+
+#first-place {
+  background-color: #ffd700; /* Gold */
+}
