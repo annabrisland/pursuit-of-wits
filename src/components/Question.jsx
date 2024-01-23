@@ -32,6 +32,7 @@ const Question = (props) => {
       if (pageCountDown > 0) {
         const myCountdown = +localStorage.getItem("page-countdown");
         localStorage.setItem("page-countdown", (myCountdown - 1));
+
         setPageCountDown(myCountdown - 1);
       } else {
         const myCountdown = +localStorage.getItem("page-countdown");
@@ -39,9 +40,7 @@ const Question = (props) => {
         if (checkAnswer(givenAnswer, props.correctAnswer) === 0) {
           localStorage.removeItem("question-data");
           props.setTurn(props.turn + 1);
-          props.setPlayerTurn((props.turn + 1) % props.numberOfPlayers)
-          localStorage.setItem("turn", `${props.turn + 1}`);
-          localStorage.setItem("player-turn", `${(props.turn + 1) % props.numberOfPlayers}`)
+          localStorage.setItem("turn", +(props.turn + 1));
           localStorage.setItem("page-countdown", 20);
           setPageCountDown(20);
           props.setQNumber(props.qNumber + 1);

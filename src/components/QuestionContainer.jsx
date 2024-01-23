@@ -46,9 +46,10 @@ const QuestionContainer = ({ changeQuestionState, changeBoardState, turn, setTur
   };
 
   return (
-
+    
     <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-      <h2 className="subtitle"> {`Player ${playerTurn + 1}'s Question`} </h2>
+      <h2 className="subtitle"> {`Player ${(((localStorage.getItem("turn")))%numberOfPlayers)+1}'s Turn!!`} </h2>
+
       <Question
         title={questionData.results.question}
         correctAnswer={questionData.results.correct_answer}
