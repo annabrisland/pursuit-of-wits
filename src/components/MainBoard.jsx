@@ -309,6 +309,7 @@ const MainBoard = ({ numberOfPlayers }) => {
             if (newPos.current >= totalCells) {
                 // Player has reached the end of the board, hide the dice
                 setShowDice(false);
+                setShowQuestion(false);
 
                 const endPos = JSON.parse(localStorage.getItem("player-position"));
 
@@ -360,50 +361,78 @@ const MainBoard = ({ numberOfPlayers }) => {
                         "current-category-map",
                         JSON.stringify(newCurrentCategories)
                     );
-
-                    // If the player has reached the end of the board, hide the dice
-                    if (newPos.current >= totalCells) {
-                        setShowDice(false);
-                    }
                 }
             }
 
         }
     }, [diceState]);
 
-    return (
-        <section>
-            {(showQuestion && !gameOver) ? (
-                <QuestionContainer
-                    changeQuestionState={setShowQuestion}
-                    changeBoardState={setShowDice}
-                    setRollState={setRollState}
-                    turn={turn}
-                    playerTurn={playerTurn}
-                    setTurn={setTurn}
-                    setPlayerTurn={setPlayerTurn}
-                    numberOfPlayers={numberOfPlayers}
-                    currentCategoryMap={currentCategoryMap}
-                />
-            ) : (
-                <Dicee
-                    setParentDiceState={setDiceState}
-                    setPlayerPosition={setPlayerPosition}
-                    currentPosition={playerPosition}
-                    setCPositions={setCPositions}
-                    setPlayerTurn={setPlayerTurn}
-                    playerTurn={playerTurn}
-                    setTurn={setTurn}
-                    numberOfPlayers={numberOfPlayers}
-                    turn={turn}
-                    changeQuestionState={setShowQuestion}
-                    changeBoardState={setShowDice}
-                    rollState={rollState}
-                    setRollState={setRollState}
-                />
-            )}
-
-            {gameOver ?
+    if (!gameOver) {
+        return (
+            <section>
+                {(showQuestion) ? (
+                    <QuestionContainer
+                        changeQuestionState={setShowQuestion}
+                        changeBoardState={setShowDice}
+                        setRollState={setRollState}
+                        turn={turn}
+                        playerTurn={playerTurn}
+                        setTurn={setTurn}
+                        setPlayerTurn={setPlayerTurn}
+                        numberOfPlayers={numberOfPlayers}
+                        currentCategoryMap={currentCategoryMap}
+                    />
+                ) : (
+                    <Dicee
+                        setParentDiceState={setDiceState}
+                        setPlayerPosition={setPlayerPosition}
+                        currentPosition={playerPosition}
+                        setCPositions={setCPositions}
+                        setPlayerTurn={setPlayerTurn}
+                        playerTurn={playerTurn}
+                        setTurn={setTurn}
+                        numberOfPlayers={numberOfPlayers}
+                        turn={turn}
+                        changeQuestionState={setShowQuestion}
+                        changeBoardState={setShowDice}
+                        rollState={rollState}
+                        setRollState={setRollState}
+                    />
+                )}
+                <div
+                    style={{
+                        position: "relative",
+                        height: totalHeight,
+                        width: totalWidth,
+                        margin: "60px",
+                    }}
+                >
+                    {cornerArrays.map((item) => (
+                        <Square
+                            key={item[0]}
+                            squareNumber={item[0]}
+                            left={item[1][0]}
+                            top={item[1][1]}
+                            color={colorMap[item[0]]}
+                        />
+                    ))}
+                    {cPositions
+                        ? avatarsConfig.map(({ state, seed }) => (
+                            <AnimatedAvatar
+                                left={cPositions[state.player][0]}
+                                top={cPositions[state.player][1]}
+                                visibility={state.visibility}
+                                key={state.player}
+                                seed={seed}
+                            />
+                        ))
+                        : null}
+                </div>
+            </section>
+        );
+    } else {
+        return (
+            
                 <div>
                     <NavLink
                         to="/podium"
@@ -411,39 +440,81 @@ const MainBoard = ({ numberOfPlayers }) => {
                     > Go to Results </NavLink>
 
                 </div>
-                :
-                ""}
-            <div
-                style={{
-                    position: "relative",
-                    height: totalHeight,
-                    width: totalWidth,
-                    margin: "60px",
-                }}
-            >
-                {cornerArrays.map((item) => (
-                    <Square
-                        key={item[0]}
-                        squareNumber={item[0]}
-                        left={item[1][0]}
-                        top={item[1][1]}
-                        color={colorMap[item[0]]}
-                    />
-                ))}
-                {cPositions
-                    ? avatarsConfig.map(({ state, seed }) => (
-                        <AnimatedAvatar
-                            left={cPositions[state.player][0]}
-                            top={cPositions[state.player][1]}
-                            visibility={state.visibility}
-                            key={state.player}
-                            seed={seed}
-                        />
-                    ))
-                    : null}
-            </div>
-        </section>
-    );
+        )
+    }
+
+    // return (
+    //     <section>
+    //         {gameOver ?
+    //             <div>
+    //                 <NavLink
+    //                     to="/podium"
+    //                     // onClick={handleGameOver}
+    //                 > Go to Results </NavLink>
+
+    //             </div>
+    //             :
+    //             ""}
+    //         {(showQuestion && !gameOver) ? (
+    //             <QuestionContainer
+    //                 changeQuestionState={setShowQuestion}
+    //                 changeBoardState={setShowDice}
+    //                 setRollState={setRollState}
+    //                 turn={turn}
+    //                 playerTurn={playerTurn}
+    //                 setTurn={setTurn}
+    //                 setPlayerTurn={setPlayerTurn}
+    //                 numberOfPlayers={numberOfPlayers}
+    //                 currentCategoryMap={currentCategoryMap}
+    //             />
+    //         ) : (
+    //             <Dicee
+    //                 setParentDiceState={setDiceState}
+    //                 setPlayerPosition={setPlayerPosition}
+    //                 currentPosition={playerPosition}
+    //                 setCPositions={setCPositions}
+    //                 setPlayerTurn={setPlayerTurn}
+    //                 playerTurn={playerTurn}
+    //                 setTurn={setTurn}
+    //                 numberOfPlayers={numberOfPlayers}
+    //                 turn={turn}
+    //                 changeQuestionState={setShowQuestion}
+    //                 changeBoardState={setShowDice}
+    //                 rollState={rollState}
+    //                 setRollState={setRollState}
+    //             />
+    //         )}
+    //         <div
+    //             style={{
+    //                 position: "relative",
+    //                 height: totalHeight,
+    //                 width: totalWidth,
+    //                 margin: "60px",
+    //             }}
+    //         >
+    //             {cornerArrays.map((item) => (
+    //                 <Square
+    //                     key={item[0]}
+    //                     squareNumber={item[0]}
+    //                     left={item[1][0]}
+    //                     top={item[1][1]}
+    //                     color={colorMap[item[0]]}
+    //                 />
+    //             ))}
+    //             {cPositions
+    //                 ? avatarsConfig.map(({ state, seed }) => (
+    //                     <AnimatedAvatar
+    //                         left={cPositions[state.player][0]}
+    //                         top={cPositions[state.player][1]}
+    //                         visibility={state.visibility}
+    //                         key={state.player}
+    //                         seed={seed}
+    //                     />
+    //                 ))
+    //                 : null}
+    //         </div>
+    //     </section>
+    // );
 };
 
 export default MainBoard;
