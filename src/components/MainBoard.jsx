@@ -7,6 +7,8 @@ import QuestionContainer from "./QuestionContainer";
 
 const MainBoard = ({ numberOfPlayers }) => {
 
+    const totalCells = 30;
+
     function step(startPos) {
         if (cornerArrays.length === 1) {
             return;
@@ -33,11 +35,11 @@ const MainBoard = ({ numberOfPlayers }) => {
         } else if (startPos === endPos) {
             return [0, 0];
         }
-        else if (startPos === 89) {
+        else if (startPos === totalCells) {
             return;
-        } else if (endPos > 89) {
+        } else if (endPos >= totalCells) {
             let totalDiff = [0, 0];
-            for (let i = 0; i < 89 - startPos; i++) {
+            for (let i = 0; i < totalCells - startPos; i++) {
                 let delta = step(startPos + i);
                 for (let i = 0; i < 2; i++) {
                     totalDiff[i] = totalDiff[i] + delta[i];
@@ -106,7 +108,7 @@ const MainBoard = ({ numberOfPlayers }) => {
         window.addEventListener("resize", handleWindowResize);
 
         const squaresWide = Math.floor((window.innerWidth - 120) / 120);
-        const totalSquares = 90;
+        const totalSquares = totalCells;
         const neededHeight = Math.ceil(totalSquares / squaresWide) * 120;
         const neededWidth = squaresWide * 120;
         setTotalHeight(neededHeight);
@@ -170,7 +172,7 @@ const MainBoard = ({ numberOfPlayers }) => {
                 { categoryName: "Art", category: 25 }
                 ];
 
-            for (let i = 0; i < 90; i++) {
+            for (let i = 0; i < totalCells; i++) {
                 let random = Math.floor(Math.random() * 5);
                 tempColorMap.push(colors[random]);
                 tempCategoryMap.push(categories[random])
@@ -283,6 +285,8 @@ const MainBoard = ({ numberOfPlayers }) => {
 
                 setCurrentCategoryMap(newCurrentCategories);
                 localStorage.setItem("current-category-map", JSON.stringify(newCurrentCategories));
+
+                // if (newPlayerPos.current >= totalCells)
             }
         }
     }, [diceState]);
