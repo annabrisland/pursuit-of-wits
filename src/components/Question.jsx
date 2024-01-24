@@ -4,7 +4,6 @@ import checkAnswer from "../utils/scoring";
 const Question = (props) => {
 
   const [answers, setAnswers] = useState([]);
-
   const [givenAnswer, setGivenAnswer] = useState('');
   const [pageCountDown, setPageCountDown] = useState((localStorage.getItem("page-countdown")));
   const [answerButtons, setAnswerButtons] = useState([]);
@@ -31,13 +30,15 @@ const Question = (props) => {
     setTimeout(() => {
       if (pageCountDown > 0) {
         const myCountdown = +localStorage.getItem("page-countdown");
+        
         localStorage.setItem("page-countdown", (myCountdown - 1));
-
         setPageCountDown(myCountdown - 1);
       } else {
+
         const myCountdown = +localStorage.getItem("page-countdown");
         localStorage.setItem("page-countdown", (myCountdown - 1));
-        if (checkAnswer(givenAnswer, props.correctAnswer) === 0) {
+        
+        if (checkAnswer(givenAnswer, props.correctAnswer) === 0) {   //indicates a wrong answer
           localStorage.removeItem("question-data");
           props.setTurn(props.turn + 1);
           localStorage.setItem("turn", +(props.turn + 1));
@@ -46,12 +47,13 @@ const Question = (props) => {
           props.setQNumber(props.qNumber + 1);
           console.log("Incorrect Answer :(");
         }
-        else if (checkAnswer(givenAnswer, props.correctAnswer) > 0) {
+        else if (checkAnswer(givenAnswer, props.correctAnswer) > 0) {   //indicates a correct answer
           props.changeQuestionState(false);
           props.changeBoardState(true);
           setPageCountDown(20);
           localStorage.setItem("page-countdown", 20);
           localStorage.removeItem("question-data");
+          props.setQNumber(0);
         }
       }
     }, 1000)
@@ -95,6 +97,7 @@ const Question = (props) => {
       <div>
       <div>
         <h2 className="question-title" >
+          {props.categoryName !== undefined ? `${props.categoryName}: ` : ""}
           {props.title !== undefined ? decodeURIComponent(props.title) : ""}
         </h2>
       </div>

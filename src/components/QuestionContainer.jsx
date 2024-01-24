@@ -2,38 +2,33 @@ import React, { useState, useEffect } from "react";
 import API from "../utils/API";
 import Question from "./Question";
 
-const QuestionContainer = ({ changeQuestionState, changeBoardState, turn, setTurn, playerTurn, setPlayerTurn, numberOfPlayers }) => {
-  const category = 9;
+const QuestionContainer = ({ changeQuestionState, changeBoardState, turn, setTurn, numberOfPlayers, currentCategoryMap }) => {
+
+
 
   const [questionData, setQuestionData] = useState({
-    results: {},
+    results: {question: "?"},
   });
 
   const [qNumber, setQNumber] = useState(0);
 
   useEffect(() => {
 
+    if (qNumber > numberOfPlayers - 1){
+      const catMap = JSON.parse(localStorage.getItem("sub-map"));
+      searchQuestion(catMap[turn%numberOfPlayers].category)
+    }
     if (qNumber > 0) {
-      if (JSON.parse(localStorage.getItem("question-data"))) {
+      if(localStorage.getItem("question-data")){
         setQuestionData(JSON.parse(localStorage.getItem("question-data")))
-      } else {
-        searchQuestion(category);
       }
     }
-
-
   }, [qNumber])
 
   useEffect(() => {
-
-
-    if (!JSON.parse(localStorage.getItem("question-data"))) {
-      searchQuestion(category);
-    } else {
-      setQuestionData(JSON.parse(localStorage.getItem("question-data")))
-    }
-
-
+    localStorage.setItem("sub-map", JSON.stringify(currentCategoryMap));
+    searchQuestion(currentCategoryMap[turn%numberOfPlayers].category)
+    setQNumber(1);
   }, []);
 
   const searchQuestion = (category) => {
@@ -46,25 +41,25 @@ const QuestionContainer = ({ changeQuestionState, changeBoardState, turn, setTur
   };
 
   return (
-    
-    <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-      <h2 className="subtitle"> {`Question for Player ${(((localStorage.getItem("turn")))%numberOfPlayers)+1}`} </h2>
 
-      <Question
-        title={questionData.results.question}
-        correctAnswer={questionData.results.correct_answer}
-        incorrectAnswer={questionData.results.incorrect_answers}
-        changeQuestionState={changeQuestionState}
-        changeBoardState={changeBoardState}
-        numberOfPlayers={numberOfPlayers}
-        turn={turn}
-        playerTurn={playerTurn}
-        setTurn={setTurn}
-        setPlayerTurn={setPlayerTurn}
-        qNumber={qNumber}
-        setQNumber={setQNumber}
-      />
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+      <h2 className="subtitle"> {`Question for Player ${(((localStorage.getItem("turn"))) % numberOfPlayers) + 1}`} </h2>
+      {qNumber > 0 ?
+        <Question
+          title={questionData.results.question}
+          categoryName={currentCategoryMap[turn%numberOfPlayers].categoryName}
+          correctAnswer={questionData.results.correct_answer}
+          incorrectAnswer={questionData.results.incorrect_answers}
+          changeQuestionState={changeQuestionState}
+          changeBoardState={changeBoardState}
+          turn={turn}
+          setTurn={setTurn}
+          qNumber={qNumber}
+          setQNumber={setQNumber}
+        />
+        : ""};
     </div>
+
   );
 };
 

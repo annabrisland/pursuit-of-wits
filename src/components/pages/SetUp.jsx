@@ -59,7 +59,12 @@ const SetUp = () => {
     localStorage.removeItem("turn");
     localStorage.removeItem("player-turn");
     localStorage.removeItem("player-position");
+    localStorage.removeItem("current-category-map");
+    localStorage.removeItem("category-map");
     localStorage.setItem("page-countdown", 20);
+    localStorage.setItem("turn", 0);
+    localStorage.setItem("current-category-map", 
+    JSON.stringify( {0:{categoryName: "General Knowledge", category: 9},1:{categoryName: "General Knowledge", category: 9},2:{categoryName: "General Knowledge", category: 9},3:{categoryName: "General Knowledge", category: 9}}));
   };
 
   return (
