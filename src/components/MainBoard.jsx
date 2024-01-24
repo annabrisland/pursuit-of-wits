@@ -8,7 +8,7 @@ import QuestionContainer from "./QuestionContainer";
 const MainBoard = ({ numberOfPlayers }) => {
 
     function step(startPos) {
-        if (cornerArrays.length === 0) {
+        if (cornerArrays.length === 1) {
             return;
         } else {
             const startSq = cornerArrays[startPos][1];
@@ -21,18 +21,23 @@ const MainBoard = ({ numberOfPlayers }) => {
                 return [distanceToNextSqX, 0];
             } else if (distanceToNextSqY !== 0) {
                 return [0, distanceToNextSqY];
+            } else if (distanceToNextSqX === 0 && distanceToNextSqY === 0) {
+                return [0, 0];
             }
         }
     }
 
     function walk(startPos, endPos) {
-        if (cornerArrays.length === 0) {
+        if (cornerArrays.length === 1) {
             return;
-        } else if (startPos === 90) {
+        } else if (startPos === endPos) {
+            return [0, 0];
+        }
+        else if (startPos === 89) {
             return;
-        } else if (endPos > 90) {
+        } else if (endPos > 89) {
             let totalDiff = [0, 0];
-            for (let i = 0; i < 90 - startPos; i++) {
+            for (let i = 0; i < 89 - startPos; i++) {
                 let delta = step(startPos + i);
                 for (let i = 0; i < 2; i++) {
                     totalDiff[i] = totalDiff[i] + delta[i];
@@ -56,13 +61,13 @@ const MainBoard = ({ numberOfPlayers }) => {
     const [rollState, setRollState] = useState(false);
 
     const [avatarsConfig, setAvatarsConfig] = useState([]);
-  
+
     const [playerStates, setPlayerStates] = useState([
-      { visibility: "visible", player: 0 },
-      { visibility: "visible", player: 1 },
-      { visibility: "visible", player: 2 },
-      { visibility: "visible", player: 3 },
-  ]);
+        { visibility: "visible", player: 0 },
+        { visibility: "visible", player: 1 },
+        { visibility: "visible", player: 2 },
+        { visibility: "visible", player: 3 },
+    ]);
 
     const [windowSize, setWindowSize] = useState([
         window.innerWidth,
@@ -73,9 +78,12 @@ const MainBoard = ({ numberOfPlayers }) => {
 
     const [totalWidth, setTotalWidth] = useState(0);
 
-    const [cornerArrays, setCornerArrays] = useState([]);
+    const [cornerArrays, setCornerArrays] = useState([[0, [0, 0]]]);
 
     const [colorMap, setColorMap] = useState(["white"]);
+
+    const [categoryMap, setCategoryMap] = useState(JSON.parse(localStorage.getItem("category-map")));
+    const [currentCategoryMap, setCurrentCategoryMap] = useState(JSON.parse(localStorage.getItem("current-category-map")))
 
     const [cPositions, setCPositions] = useState(JSON.parse(localStorage.getItem("c-positions")));
 
@@ -84,10 +92,11 @@ const MainBoard = ({ numberOfPlayers }) => {
         diceNumber: 1,
     });
 
-    const [playerPosition, setPlayerPosition] = useState((JSON.parse(localStorage.getItem("player-position"))));
+    const [playerPosition, setPlayerPosition] =
+        useState(JSON.parse(localStorage.getItem("player-position")));
 
-    const [playerTurn, setPlayerTurn] = useState(+localStorage.getItem("player-turn"));
-    const [turn, setTurn] = useState(+localStorage.getItem("turn"));
+    const [playerTurn, setPlayerTurn] = useState(1);
+    const [turn, setTurn] = useState(1);
 
     useEffect(() => {
         const handleWindowResize = () => {
@@ -131,14 +140,16 @@ const MainBoard = ({ numberOfPlayers }) => {
         for (let i = 0; i < numberOfPlayers; i++) {
             let vector = [0, 0]
             for (let j = 0; j < 2; j++) {
-                {playerPosition ? vector[j] = +[(Object.entries(tempMap)[playerPosition[i].current])[1][j]] : null;}
-                
+                { playerPosition ? vector[j] = +[(Object.entries(tempMap)[playerPosition[i].current])[1][j]] : null; }
+
             }
             tempPositions = { ...tempPositions, [i]: vector }
         }
 
         setCPositions(tempPositions);
         localStorage.setItem("c-positions", JSON.stringify(tempPositions));
+
+
         return () => {
             window.removeEventListener("resize", handleWindowResize);
         };
@@ -148,98 +159,133 @@ const MainBoard = ({ numberOfPlayers }) => {
 
         if (!localStorage.getItem("color-map")) {
             let tempColorMap = ["white"];
+            let tempCategoryMap = [{ categoryName: "General Knowledge", category: 9 }];
 
             const colors = ["#F4511E", "#D81B60", "#1E88E5", "#7CB342", "#FFB300"];
+            const categories =
+                [{ categoryName: "General Knowledge", category: 9 },
+                { categoryName: "Sports", category: 21 },
+                { categoryName: "Geography", category: 22 },
+                { categoryName: "Science", category: 17 },
+                { categoryName: "Art", category: 25 }
+                ];
 
             for (let i = 0; i < 90; i++) {
-                tempColorMap.push(colors[Math.floor(Math.random() * 5)]);
+                let random = Math.floor(Math.random() * 5);
+                tempColorMap.push(colors[random]);
+                tempCategoryMap.push(categories[random])
             }
 
             setColorMap(tempColorMap);
+            setCategoryMap(tempCategoryMap);
+            localStorage.setItem("category-map", JSON.stringify(tempCategoryMap));
             localStorage.setItem("color-map", JSON.stringify(tempColorMap));
         } else {
             const tempColorMap = JSON.parse(localStorage.getItem("color-map"));
             setColorMap(tempColorMap);
+            const tempCategoryMap = JSON.parse(localStorage.getItem("category-map"));
+            setCategoryMap(tempCategoryMap);
         }
 
         if (!localStorage.getItem("c-positions")) {
-            setCPositions( JSON.stringify(Object.entries({0: [0, 0], 1: [0, 0], 2: [0, 0], 3: [0, 0]})));
+            localStorage.setItem("c-positions", (JSON.stringify({ 0: [0, 0], 1: [0, 0], 2: [0, 0], 3: [0, 0] })));
+            setCPositions({ 0: [0, 0], 1: [0, 0], 2: [0, 0], 3: [0, 0] })
         } else {
-            const cPositions = JSON.parse(localStorage.getItem("c-positions"));
-            setCPositions(cPositions);
+            setCPositions(JSON.parse(localStorage.getItem("c-positions")))
         }
 
         if (!localStorage.getItem("turn")) {
-            localStorage.setItem("turn", 0);
-            setTurn(0);
-            setPlayerTurn(0);
+            localStorage.setItem("turn", 1);
+            setTurn(1);
         } else {
             setTurn(+localStorage.getItem("turn"));
-            setPlayerTurn(+localStorage.getItem("turn")%numberOfPlayers);
         }
 
-        if (!localStorage.getItem("player-position")){
-            setPlayerPosition({0:{old: 0, current: 0}, 1:{old: 0, current: 0}, 2:{old: 0, current: 0}, 3:{old: 0, current: 0}})
+        if (!localStorage.getItem("player-position")) {
+            localStorage.setItem("player-position", JSON.stringify({ 0: { old: 0, current: 0 }, 1: { old: 0, current: 0 }, 2: { old: 0, current: 0 }, 3: { old: 0, current: 0 } }));
+            setPlayerPosition({ 0: { old: 0, current: 0 }, 1: { old: 0, current: 0 }, 2: { old: 0, current: 0 }, 3: { old: 0, current: 0 } });
+
         } else {
-            setPlayerPosition(JSON.parse(localStorage.getItem("player-position")))
+            setPlayerPosition(JSON.parse(localStorage.getItem("player-position")));
+        }
+
+        if (!localStorage.getItem("current-category-map")) {
+            let initCurrent = { 0: { categoryName: "General Knowledge", category: 9 }, 1: { categoryName: "General Knowledge", category: 9 }, 2: { categoryName: "General Knowledge", category: 9 }, 3: { categoryName: "General Knowledge", category: 9 } };
+            setCurrentCategoryMap(initCurrent);
+            localStorage.setItem("current-category-map", JSON.stringify(initCurrent));
+        } else {
+            setCurrentCategoryMap(JSON.parse(localStorage.getItem("current-category-map")));
+            console.log(JSON.parse(localStorage.getItem("current-category-map")));
         }
 
         if (localStorage.getItem("avatarSeeds")) {
             const avatarSeeds = JSON.parse(localStorage.getItem("avatarSeeds"));
             const selectedCharacters = JSON.parse(localStorage.getItem("selectedCharacters"));
             const tempArray = [];
-      
+
             for (let i = 0; i < 4; i++) {
-              if (selectedCharacters[i]) {
-                tempArray.push({ state: playerStates[i], seed: avatarSeeds[selectedCharacters[i].index] });
-              } else {
-                tempArray.push({ state: { visibility: 'hidden', player: i }, seed: `empty` });
-              }
+                if (selectedCharacters[i]) {
+                    tempArray.push({ state: playerStates[i], seed: avatarSeeds[selectedCharacters[i].index] });
+                } else {
+                    tempArray.push({ state: { visibility: 'hidden', player: i }, seed: `empty` });
+                }
             }
-      
+
             localStorage.setItem("avatars-config", JSON.stringify(tempArray));
             console.log(tempArray);
             setAvatarsConfig(tempArray);
-          }
+        }
 
     }, []);
 
 
     useEffect(() => {
 
-        if((numberOfPlayers === 0)||(!playerPosition)){
+        const updateNum = turn % numberOfPlayers;
+
+        if (!playerPosition) {
             return
         } else {
-            console.log(playerPosition);
-            const updateNum = (localStorage.getItem("turn"))%numberOfPlayers;
-            if (
-                !walk(playerPosition[updateNum].old, playerPosition[updateNum].current)
-            ) {
-                return;
+
+            const oldPos = playerPosition[updateNum];
+            const newPos = { old: oldPos.current, current: oldPos.current + diceState.diceNumber };
+
+            let moveVector = [0, 0];
+
+            if (newPos.current >= 88) {
+                moveVector = walk(newPos.old, 89);
+            } else if (newPos.current > newPos.old) {
+                moveVector = walk(
+                    newPos.old,
+                    newPos.current
+                );
             } else {
-                let moveVector;
-                if (playerPosition[updateNum].current >= 89) {
-                    moveVector = walk(playerPosition[updateNum].old, 89);
-                } else {
-                    moveVector = walk(
-                        playerPosition[updateNum].old,
-                        playerPosition[updateNum].current
-                    );
-                }
-    
+                moveVector = [0, 0];
+            }
+
+            if (!moveVector) {
+                return
+            } else {
                 const startX = cPositions[updateNum][0];
                 const endX = startX + moveVector[0];
                 const startY = cPositions[updateNum][1];
                 const endY = startY + moveVector[1];
-    
+
                 setCPositions({ ...cPositions, [updateNum]: [endX, endY] });
-                localStorage.setItem("c-positions", JSON.stringify({ ...cPositions, [updateNum]: [endX, endY] }))
+                localStorage.setItem("c-positions", JSON.stringify({ ...cPositions, [updateNum]: [endX, endY] }));
+
+                const newPlayerPos = { ...playerPosition, [updateNum]: newPos }
+                setPlayerPosition(newPlayerPos);
+                localStorage.setItem("player-position", JSON.stringify(newPlayerPos));
+
+                const newCurrentCategory = categoryMap[newPos.current];
+                const newCurrentCategories = { ...currentCategoryMap, [updateNum]: newCurrentCategory };
+
+                setCurrentCategoryMap(newCurrentCategories);
+                localStorage.setItem("current-category-map", JSON.stringify(newCurrentCategories));
             }
-    
         }
-
-
-    }, [playerPosition]);
+    }, [diceState]);
 
     return (
         <section>
@@ -253,11 +299,13 @@ const MainBoard = ({ numberOfPlayers }) => {
                     setTurn={setTurn}
                     setPlayerTurn={setPlayerTurn}
                     numberOfPlayers={numberOfPlayers}
+                    currentCategoryMap={currentCategoryMap}
                 />
             ) : <Dicee
                 setParentDiceState={setDiceState}
                 setPlayerPosition={setPlayerPosition}
                 currentPosition={playerPosition}
+                setCPositions={setCPositions}
                 setPlayerTurn={setPlayerTurn}
                 playerTurn={playerTurn}
                 setTurn={setTurn}
