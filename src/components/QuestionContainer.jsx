@@ -14,7 +14,7 @@ const QuestionContainer = ({ changeQuestionState, changeBoardState, turn, setTur
 
   useEffect(() => {
 
-    if (qNumber > numberOfPlayers - 1){
+    if (qNumber > numberOfPlayers + 1){
       const catMap = JSON.parse(localStorage.getItem("sub-map"));
       searchQuestion(catMap[turn%numberOfPlayers].category)
     }
@@ -57,7 +57,7 @@ const QuestionContainer = ({ changeQuestionState, changeBoardState, turn, setTur
           qNumber={qNumber}
           setQNumber={setQNumber}
         />
-        : ""};
+        : ""}
     </div>
 
   );
