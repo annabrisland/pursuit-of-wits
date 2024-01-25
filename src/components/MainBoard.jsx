@@ -6,7 +6,7 @@ import QuestionContainer from "./QuestionContainer";
 import { NavLink } from "react-router-dom";
 
 const MainBoard = ({ numberOfPlayers }) => {
-  const totalCells = 10;
+  const totalCells = 30;
 
   function step(startPos) {
     if (cornerArrays.length === 1) {
@@ -154,18 +154,16 @@ const MainBoard = ({ numberOfPlayers }) => {
     let tempPositions = { 0: [0, 0], 1: [0, 0], 2: [0, 0], 3: [0, 0] };
     let currentPlayer = 0;
 
+
     for (let i = 0; i < numberOfPlayers; i++) {
       let vector = [0, 0];
       for (let j = 0; j < 2; j++) {
-        {
-          playerPosition
-            ? (vector[j] = +[
-                Object.entries(tempMap)[playerPosition[i].current][1][j],
-                (currentPlayer = i),
-                localStorage.setItem("current-player", currentPlayer),
-              ])
-            : null;
-        }
+        if(localStorage.getItem("player-position")){
+
+          vector[j] = 
+              Object.entries(tempMap)[playerPosition[i].current][1][j]
+
+        }   
       }
       tempPositions = { ...tempPositions, [i]: vector };
     }
@@ -293,6 +291,7 @@ const MainBoard = ({ numberOfPlayers }) => {
 
   useEffect(() => {
     const updateNum = turn % numberOfPlayers;
+    let moveVector = [0, 0];
 
     if (!playerPosition) {
       return;
@@ -302,8 +301,6 @@ const MainBoard = ({ numberOfPlayers }) => {
         old: oldPos.current,
         current: oldPos.current + diceState.diceNumber,
       };
-
-      let moveVector = [0, 0];
 
       if (newPos.current >= totalCells) {
         const endPos = JSON.parse(localStorage.getItem("player-position"));
@@ -328,44 +325,43 @@ const MainBoard = ({ numberOfPlayers }) => {
         setGameOver(true);
       } else if (newPos.current > newPos.old) {
         moveVector = walk(newPos.old, newPos.current);
-      } else {
-        moveVector = [0, 0];
-      }
 
-      if (gameOver === false) {
-        if (!moveVector) {
-          return;
-        } else {
-          const startX = cPositions[updateNum][0];
-          const endX = startX + moveVector[0];
-          const startY = cPositions[updateNum][1];
-          const endY = startY + moveVector[1];
 
-          setCPositions({ ...cPositions, [updateNum]: [endX, endY] });
-          localStorage.setItem(
-            "c-positions",
-            JSON.stringify({ ...cPositions, [updateNum]: [endX, endY] })
-          );
+        if (gameOver === false) {
+          if (!moveVector) {
+            return;
+          } else {
+            const startX = cPositions[updateNum][0];
+            const endX = startX + moveVector[0];
+            const startY = cPositions[updateNum][1];
+            const endY = startY + moveVector[1];
 
-          const newPlayerPos = { ...playerPosition, [updateNum]: newPos };
-          setPlayerPosition(newPlayerPos);
-          localStorage.setItem("player-position", JSON.stringify(newPlayerPos));
+            setCPositions({ ...cPositions, [updateNum]: [endX, endY] });
+            localStorage.setItem(
+              "c-positions",
+              JSON.stringify({ ...cPositions, [updateNum]: [endX, endY] })
+            );
 
-          const newCurrentCategory = categoryMap[newPos.current];
-          const newCurrentCategories = {
-            ...currentCategoryMap,
-            [updateNum]: newCurrentCategory,
-          };
+            const newPlayerPos = { ...playerPosition, [updateNum]: newPos };
+            setPlayerPosition(newPlayerPos);
+            localStorage.setItem("player-position", JSON.stringify(newPlayerPos));
 
-          setCurrentCategoryMap(newCurrentCategories);
-          localStorage.setItem(
-            "current-category-map",
-            JSON.stringify(newCurrentCategories)
-          );
+            const newCurrentCategory = categoryMap[newPos.current];
+            const newCurrentCategories = {
+              ...currentCategoryMap,
+              [updateNum]: newCurrentCategory,
+            };
+
+            setCurrentCategoryMap(newCurrentCategories);
+            localStorage.setItem(
+              "current-category-map",
+              JSON.stringify(newCurrentCategories)
+            );
+          }
         }
       }
     }
-  }, [diceState]);
+    }, [diceState]);
 
   if (!gameOver) {
     return (
@@ -418,14 +414,14 @@ const MainBoard = ({ numberOfPlayers }) => {
           ))}
           {cPositions
             ? avatarsConfig.map(({ state, seed }) => (
-                <AnimatedAvatar
-                  left={cPositions[state.player][0]}
-                  top={cPositions[state.player][1]}
-                  visibility={state.visibility}
-                  key={state.player}
-                  seed={seed}
-                />
-              ))
+              <AnimatedAvatar
+                left={cPositions[state.player][0]}
+                top={cPositions[state.player][1]}
+                visibility={state.visibility}
+                key={state.player}
+                seed={seed}
+              />
+            ))
             : null}
         </div>
       </section>

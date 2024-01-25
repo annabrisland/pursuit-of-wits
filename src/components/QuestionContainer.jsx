@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import API from "../utils/API";
+import API2 from "../utils/API2";
 import Question from "./Question";
 
 const QuestionContainer = ({ changeQuestionState, changeBoardState, turn, setTurn, numberOfPlayers, currentCategoryMap }) => {
@@ -14,28 +15,27 @@ const QuestionContainer = ({ changeQuestionState, changeBoardState, turn, setTur
 
   useEffect(() => {
 
-    if (qNumber > numberOfPlayers + 1){
-      const catMap = JSON.parse(localStorage.getItem("sub-map"));
-      searchQuestion(catMap[turn%numberOfPlayers].category)
+    if (qNumber === 2){
+      localStorage.removeItem("question-data");
+      setQNumber(0);
     }
-    if (qNumber > 0) {
+
+    if (qNumber === 0){
       if(localStorage.getItem("question-data")){
-        setQuestionData(JSON.parse(localStorage.getItem("question-data")))
+        setQuestionData(JSON.parse(localStorage.getItem("question-data")));
+        setQNumber(1)
+      } else {
+        searchQuestion();
+        setQNumber(1);
       }
     }
   }, [qNumber])
 
-  useEffect(() => {
-    localStorage.setItem("sub-map", JSON.stringify(currentCategoryMap));
-    searchQuestion(currentCategoryMap[turn%numberOfPlayers].category)
-    setQNumber(1);
-  }, []);
-
-  const searchQuestion = (category) => {
-    API.search(category)
+  const searchQuestion = () => {
+    API2.search()
       .then((res) => {
-        setQuestionData({ ...questionData, results: res.data.results[0] })
-        localStorage.setItem("question-data", JSON.stringify({ ...questionData, results: res.data.results[0] }));;
+        setQuestionData({ ...questionData, results: res.data[0] })
+        localStorage.setItem("question-data", JSON.stringify({ ...questionData, results: res.data[0] }));;
       })
       .catch((err) => console.log(err));
   };
@@ -47,9 +47,9 @@ const QuestionContainer = ({ changeQuestionState, changeBoardState, turn, setTur
       {qNumber > 0 ?
         <Question
           title={questionData.results.question}
-          categoryName={currentCategoryMap[turn%numberOfPlayers].categoryName}
-          correctAnswer={questionData.results.correct_answer}
-          incorrectAnswer={questionData.results.incorrect_answers}
+          categoryName={questionData.results.category}
+          correctAnswer={questionData.results.correctAnswer}
+          incorrectAnswer={questionData.results.incorrectAnswers}
           changeQuestionState={changeQuestionState}
           changeBoardState={changeBoardState}
           turn={turn}
