@@ -293,6 +293,8 @@ const MainBoard = ({ numberOfPlayers }) => {
     const updateNum = turn % numberOfPlayers;
     let moveVector = [0, 0];
 
+    localStorage.setItem("current-player", updateNum);
+    
     if (!playerPosition) {
       return;
     } else {
