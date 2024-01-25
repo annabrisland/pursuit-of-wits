@@ -118,3 +118,8 @@ a:hover {
   font-weight: 500;
   color: white;
 }
+
+.center {
+  text-align: center;
+  margin-top: 25%;
+}
