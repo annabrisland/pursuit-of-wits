@@ -25,7 +25,7 @@ const Question = (props) => {
 
     setTimeout(() => {
       // Set seconds timer for each question
-      const time = 15;
+      const time = 20;
       if (pageCountDown > 0) {
         const myCountdown = +localStorage.getItem("page-countdown");
         
