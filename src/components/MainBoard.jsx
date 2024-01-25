@@ -152,6 +152,7 @@ const MainBoard = ({ numberOfPlayers }) => {
     );
 
     let tempPositions = { 0: [0, 0], 1: [0, 0], 2: [0, 0], 3: [0, 0] };
+    let currentPlayer = 0;
 
     for (let i = 0; i < numberOfPlayers; i++) {
       let vector = [0, 0];
@@ -160,6 +161,8 @@ const MainBoard = ({ numberOfPlayers }) => {
           playerPosition
             ? (vector[j] = +[
                 Object.entries(tempMap)[playerPosition[i].current][1][j],
+                (currentPlayer = i),
+                localStorage.setItem("current-player", currentPlayer),
               ])
             : null;
         }
@@ -308,7 +311,12 @@ const MainBoard = ({ numberOfPlayers }) => {
         let finalPos = [];
 
         for (let i = 0; i < numberOfPlayers; i++) {
-          finalPos.push([i, endPos[i].current]);
+          let calcPos = endPos[i].current;
+          const winner = localStorage.getItem("current-player");
+          if (winner == i) {
+            calcPos = endPos[i].current + 2000;
+          }
+          finalPos.push([i, calcPos]);
         }
 
         // Sort players in descending order of end position
